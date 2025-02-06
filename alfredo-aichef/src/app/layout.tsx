@@ -5,7 +5,7 @@ import { Roboto } from 'next/font/google';
 import theme from '../theme';
 import { ThemeProvider } from '@mui/material';
 import {ClerkProvider, SignedIn, SignedOut, SignIn, UserButton} from "@clerk/nextjs";
-import styles from "@/app/page.module.css";
+
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -28,7 +28,7 @@ export default function RootLayout({
       <ClerkProvider>
     <html lang="en">
       <body className={roboto.variable}>
-      <header className={styles.header}>
+      <header >
         <UserButton showName />
       </header>
         <AppRouterCacheProvider>
