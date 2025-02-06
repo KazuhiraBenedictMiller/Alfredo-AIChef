@@ -26,6 +26,12 @@
     --button-secondary-hover: #1a1a1a;
   }
 }
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 20px;
+}
 
 .main {
   display: flex;
