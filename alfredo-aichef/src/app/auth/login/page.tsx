@@ -10,7 +10,7 @@ export default function Login() {
       alignItems={'center'}
     >
       <SignedOut>
-        <SignIn routing="hash" />
+        <SignIn></SignIn>
       </SignedOut>
     </Box>
   );

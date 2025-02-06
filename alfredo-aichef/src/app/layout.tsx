@@ -4,7 +4,7 @@ import './globals.css';
 import { Roboto } from 'next/font/google';
 import theme from '../theme';
 import { ThemeProvider } from '@mui/material';
-import { ClerkProvider, UserButton } from '@clerk/nextjs';
+import { ClerkProvider, SignedOut, UserButton } from '@clerk/nextjs';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -32,7 +32,9 @@ export default function RootLayout({
           </header>
           <AppRouterCacheProvider>
             <ThemeProvider theme={theme}>
-              <main style={{ height: '100vh' }}>{children}</main>
+              <main style={{ height: '100vh' }}>
+                <SignedOut>{children}</SignedOut>
+              </main>
             </ThemeProvider>
           </AppRouterCacheProvider>
         </body>
