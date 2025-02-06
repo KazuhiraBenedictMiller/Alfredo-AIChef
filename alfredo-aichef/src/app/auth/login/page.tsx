@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { SignedOut, SignIn } from '@clerk/nextjs';
+import { SignedOut, SignInButton, SignUpButton } from '@clerk/nextjs';
 
 export default function Login() {
   return (
@@ -10,7 +10,8 @@ export default function Login() {
       alignItems={'center'}
     >
       <SignedOut>
-        <SignIn></SignIn>
+        <SignInButton />
+        <SignUpButton />
       </SignedOut>
     </Box>
   );
