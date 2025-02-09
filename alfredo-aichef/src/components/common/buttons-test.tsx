@@ -5,9 +5,7 @@ import { Stack } from '@mui/material';
 export const ButtonsTest = () => {
   return (
     <Stack spacing={2} direction="row">
-      <Button variant="text">Text</Button>
-      <Button variant="contained">Contained</Button>
-      <Button variant="outlined">Outlined</Button>
+      <Button variant="text">Try it now</Button>
     </Stack>
   );
 };

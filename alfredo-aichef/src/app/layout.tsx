@@ -4,8 +4,7 @@ import './globals.css';
 import { Roboto } from 'next/font/google';
 import theme from '../theme';
 import { ThemeProvider } from '@mui/material';
-import {ClerkProvider, SignedIn, SignedOut, SignIn, UserButton} from "@clerk/nextjs";
-
+import { ClerkProvider, SignedOut, UserButton } from '@clerk/nextjs';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -25,22 +24,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <ClerkProvider>
-    <html lang="en">
-      <body className={roboto.variable}>
-      <header >
-        <UserButton showName />
-      </header>
-        <AppRouterCacheProvider>
-          <SignedOut>
-            <SignIn routing="hash" />
-          </SignedOut>
-          <SignedIn >
-          <ThemeProvider theme={theme}>{children}</ThemeProvider>
-          </SignedIn>
-        </AppRouterCacheProvider>
-      </body>
-    </html>
-      </ClerkProvider>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={roboto.variable}>
+          <header>
+            <UserButton showName />
+          </header>
+          <AppRouterCacheProvider>
+            <ThemeProvider theme={theme}>
+              <main style={{ height: '100vh' }}>
+                <SignedOut>{children}</SignedOut>
+              </main>
+            </ThemeProvider>
+          </AppRouterCacheProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
