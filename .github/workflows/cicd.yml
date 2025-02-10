@@ -23,7 +23,8 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -f AlfredoAI/AIApp/Docker/InferenceAPI.Dockerfile -t kazuhirabenedictmiller/alfredoaiapp:latest AlfredoAI/AIApp
-          docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
+	  echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin           
+# docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
           docker push kazuhirabenedictmiller/alfredoaiapp:latest
 	  docker logout
           sudo rm -rf /home/admin/.docker/config.json
