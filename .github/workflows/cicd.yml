@@ -1,0 +1,46 @@
+# Github Action to CICD Automatically on new pushes by me (KazuhiraBenedictMiller)
+# The Action builds the Docker Image, Pushes to Docker Registry.
+# Then it Log Ins into the EC2 Instance, Pull the newly buit Image, build it Locally on the EC2 Instance and Run the Container.
+
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [ main, dev]
+    paths:
+      - 'AIApp/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.event.pusher.name == 'KazuhiraBenedictMiller'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          path: AlfredoAI
+
+      - name: Build Docker image
+        run: |
+          docker build -f AlfredoAI/AIApp/Docker/InferenceAPI.Dockerfile -t kazuhirabenedictmiller/alfredoaiapp:latest AlfredoAI/AIApp
+          docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
+          docker push kazuhirabenedictmiller/alfredoaiapp:latest
+	  docker logout
+          sudo rm -rf /home/admin/.docker/config.json
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-session-name: GitHubActionsSession
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy to EC2
+        run: |
+          ssh -i <(echo "${{ secrets.EC2_PRIVATE_KEY }}" | base64 -d) ubuntu@${{ secrets.EC2_IP_ADDRESS }} "
+            docker pull kazuhirabenedictmiller/alfredoaiapp:latest;
+            docker stop AIInference || true;
+            docker rm AIInference || true;
+            docker run -d -it -p 8000:8000 --name AIInference kazuhirabenedictmiller/alfredoaiapp:latest;
+            docker image prune -a -f;
+          "
