@@ -10,6 +10,10 @@ on:
     paths:
       - 'AIApp/**'
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -27,7 +31,7 @@ jobs:
           docker logout
           sudo rm -rf /home/admin/.docker/config.json
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           role-session-name: GitHubActionsSession
