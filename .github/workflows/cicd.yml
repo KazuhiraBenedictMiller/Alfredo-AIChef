@@ -35,10 +35,9 @@ jobs:
           role-session-name: GitHubActionsSession
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Write SSH Key to File
+      - name: Write SSH key to file
         run: |
-          # If your key is base64 encoded in the secret, decode it.
-          echo "${{ secrets.EC2_PRIVATE_KEY }}" | base64 -d > key.pem
+          echo "${{ secrets.EC2_PRIVATE_KEY }}" > key.pem
           chmod 600 key.pem
 
       - name: Deploy to EC2 via SSH
