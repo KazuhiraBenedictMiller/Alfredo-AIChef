@@ -42,7 +42,7 @@ jobs:
 
       - name: Deploy to EC2 via SSH
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_IP_ADDRESS }} "
+          ssh -o StrictHostKeyChecking=no -i key.pem admin@${{ secrets.EC2_IP_ADDRESS }} "
             docker pull kazuhirabenedictmiller/alfredoaiapp:latest;
             docker stop AIInference || true;
             docker rm AIInference || true;
