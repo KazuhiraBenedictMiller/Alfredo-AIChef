@@ -15,27 +15,23 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.event.pusher.name == 'KazuhiraBenedictMiller'
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
         with:
           path: AlfredoAI
-
       - name: Build Docker image
         run: |
           docker build -f AlfredoAI/AIApp/Docker/InferenceAPI.Dockerfile -t kazuhirabenedictmiller/alfredoaiapp:latest AlfredoAI/AIApp
-# echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin           
           docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
           docker push kazuhirabenedictmiller/alfredoaiapp:latest
           docker logout
           sudo rm -rf /home/admin/.docker/config.json
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           role-session-name: GitHubActionsSession
           aws-region: ${{ secrets.AWS_REGION }}
-
       - name: Deploy to EC2
         run: |
           ssh -i <(echo "${{ secrets.EC2_PRIVATE_KEY }}" | base64 -d) ubuntu@${{ secrets.EC2_IP_ADDRESS }} "
