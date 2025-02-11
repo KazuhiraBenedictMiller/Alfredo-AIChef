@@ -1,5 +1,9 @@
 {
-  "field1": 1,
-  "field2": 3.14,
-  "field3": "example"
+  "Ingredients": [
+    {
+      "Name": "Banana",
+      "Quantity": 3.00,
+      "Unit": "Units"
+    }
+  ]
 }
