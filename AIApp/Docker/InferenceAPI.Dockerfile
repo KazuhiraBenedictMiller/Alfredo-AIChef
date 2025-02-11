@@ -1,7 +1,7 @@
 # cd AIChef/AIApp/
 # DOCKER_BUILDKIT=1
 # docker build -t aiinferenceapi -f Docker/InferenceAPI.Dockerfile .
-# docker run --name AIInference -d -it -p 8000:8000 aiinferenceapi 
+# docker run --name AIInference -e ACTUAL_API_KEY="$VALID_API_KEY" -d -it -p 8000:8000 aiinferenceapi 
 
 # The builder image, used to build the virtual environment
 FROM python:3.13 AS builder
