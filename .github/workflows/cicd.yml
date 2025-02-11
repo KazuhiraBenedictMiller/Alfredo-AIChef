@@ -46,6 +46,6 @@ jobs:
             docker pull kazuhirabenedictmiller/alfredoaiapp:latest;
             docker stop AIInference || true;
             docker rm AIInference || true;
-            docker run -d -it -p 8000:8000 --name AIInference kazuhirabenedictmiller/alfredoaiapp:latest;
+            docker run -d -it -p 8000:8000 -e ACTUAL_API_KEY="$ACTUAL_API_KEY" --name AIInference kazuhirabenedictmiller/alfredoaiapp:latest;
             docker image prune -a -f;
           "
