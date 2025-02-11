@@ -40,7 +40,7 @@ COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 WORKDIR /app
 
 # Copying Data
-COPY src ./app
+COPY src ./
 
 # Expose the port FastAPI will run on
 EXPOSE 8000
