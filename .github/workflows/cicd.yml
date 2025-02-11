@@ -59,6 +59,7 @@ jobs:
             docker image prune -a -f
           EOF
 
+# Without EOF:
 #          ssh -o StrictHostKeyChecking=no -i key.pem admin@${{ secrets.EC2_IP_ADDRESS }} "
 #            export ACTUAL_API_KEY=$(aws ssm get-parameter --name "ACTUAL_API_KEY" --with-decryption --query "Parameter.Value" --output text)
 #            docker pull kazuhirabenedictmiller/alfredoaiapp:latest;
