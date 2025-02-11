@@ -31,8 +31,8 @@ RUN poetry install --without dev --no-root && rm -rf $POETRY_CACHE_DIR
 # The runtime image, used to just run the code provided its virtual environment (Passed by the Builder Image)
 FROM python:3.13-slim AS runtime
 
-ENV VIRTUAL_ENV = /app/.venv \
-    PATH = "/app/.venv/bin:$PATH"	
+ENV VIRTUAL_ENV=/app/.venv \
+    PATH="/app/.venv/bin:$PATH"	
 
 COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 
