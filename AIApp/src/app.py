@@ -1,12 +1,12 @@
 '''
 curl -X POST "http://3.72.247.90:8000/predict/" \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: your-secure-api-key" \
+  -H "Auth: your-secure-api-key" \
   -d '{"field1": 1, "field2": 3.14, "field3": "example"}'
   -d @data.json
 
 curl -X GET "http://3.72.247.90:8000" \
-  -H "X-API-KEY: your-secure-api-key" \
+  -H "Auth: your-secure-api-key" \
 '''
 
 from fastapi import FastAPI, Depends, HTTPException, Security
@@ -18,7 +18,7 @@ import os
 app = FastAPI()
 
 # Define the API key header
-api_key_header = APIKeyHeader(name = "X-API-KEY")
+api_key_header = APIKeyHeader(name = "Auth")
 
 # List of valid API keys (in a real application, store these securely)
 # VALID_API_KEYS = {"mattbelcher", "aaserravalle"}

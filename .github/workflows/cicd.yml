@@ -43,9 +43,10 @@ jobs:
       - name: Deploy to EC2 via SSH
         run: |
           ssh -o StrictHostKeyChecking=no -i key.pem admin@${{ secrets.EC2_IP_ADDRESS }} "
+            export ACTUAL_API_KEY=$(aws ssm get-parameter --name "ACTUAL_API_KEY" --with-decryption --query "Parameter.Value" --output text)
             docker pull kazuhirabenedictmiller/alfredoaiapp:latest;
             docker stop AIInference || true;
             docker rm AIInference || true;
-            docker run -d -it -p 8000:8000 --name AIInference kazuhirabenedictmiller/alfredoaiapp:latest;
+            docker run -d -it -p 8000:8000 -e ACTUAL_API_KEY="$ACTUAL_API_KEY" --name AIInference kazuhirabenedictmiller/alfredoaiapp:latest;
             docker image prune -a -f;
           "
