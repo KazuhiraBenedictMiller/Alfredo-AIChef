@@ -1,5 +1,5 @@
 # cd AIChef/AIApp/
-# DOCKER_BUILDKIT=1 docker build .
+# DOCKER_BUILDKIT=1
 # docker build -t aiinferenceapi -f Docker/InferenceAPI.Dockerfile .
 # docker run --name AIInference -d -it -p 8000:8000 aiinferenceapi 
 
@@ -16,7 +16,7 @@ ENV POETRY_VERSION=2.0.1 \
 # Installing Poetry Version
 RUN pip install poetry==$POETRY_VERSION
 
-# Set the working directory
+# Set the Working Directory
 WORKDIR /app
 
 # Copying only Necessary Files
@@ -26,14 +26,13 @@ COPY pyproject.toml poetry.lock ./
 RUN touch README.md	
 
 # Installing only the Virtual Environment Dependencies and Removing Cache
-RUN poetry install --no-root && rm -rf $POETRY_CACHE_DIR		 
-# --without dev 
+RUN poetry install --without dev --no-root && rm -rf $POETRY_CACHE_DIR 
 
 # The runtime image, used to just run the code provided its virtual environment (Passed by the Builder Image)
 FROM python:3.13-slim AS runtime
 
-ENV VIRTUAL_ENV=/app/.venv \
-    PATH="/app/.venv/bin:$PATH"	
+ENV VIRTUAL_ENV = /app/.venv \
+    PATH = "/app/.venv/bin:$PATH"	
 
 COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 
