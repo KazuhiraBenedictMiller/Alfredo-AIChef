@@ -1,4 +1,4 @@
-import ThemeButton from '@/components/common/theme-button';
+import { ThemeButton } from '@/components/common/theme-button';
 import { Box, Button } from '@mui/material';
 import Link from 'next/link';
 
@@ -12,8 +12,8 @@ export default function LandingPage() {
     >
       <Link href="/auth/login">
         <Button variant="contained">Login</Button>
-        <ThemeButton />
       </Link>
+      <ThemeButton />
     </Box>
   );
 }
