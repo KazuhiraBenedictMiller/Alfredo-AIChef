@@ -2,7 +2,7 @@
 # Script to call the FastAPI /predict/ endpoint
 
 # Define variables
-API_URL="localhost:8000/inference/"
+API_URL="0.0.0.0:8000/inference/"
 AUTH_KEY="AlfredoAIAPIEndpoint"
 JSON_FILE="sample.json"
 
