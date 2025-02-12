@@ -10,5 +10,7 @@
       "Quantity": 200,
       "Unit": "Grams"
     }
-  ]
+  ],
+  "SystemPrompt": "You are a Very Cool AI Chef...",
+  "UserPrompt": "Hi I would like to eat something..."
 }
