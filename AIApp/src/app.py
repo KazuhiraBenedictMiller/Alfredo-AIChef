@@ -46,7 +46,7 @@ class IngredientDetails(BaseModel):
     Unit: str
 
 class IngredientsList(BaseModel):
-    Ingredients: List[Ingredient]
+    Ingredients: List[IngredientDetails]
 
 @app.post("/inference/", dependencies = [Depends(validate_api_key)])
 async def predict(input: IngredientsList):
