@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import './globals.css';
 import { Inter } from 'next/font/google';
-import { ClerkProvider, SignedOut, UserButton } from '@clerk/nextjs';
+import { ClerkProvider, UserButton } from '@clerk/nextjs';
 import { Providers } from './providers';
+import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -29,10 +30,9 @@ export default function RootLayout({
             <UserButton showName />
           </header>
           <AppRouterCacheProvider>
+            <InitColorSchemeScript attribute="class" />
             <Providers>
-              <main style={{ height: '100vh' }}>
-                <SignedOut>{children}</SignedOut>
-              </main>
+              <main style={{ height: '100vh' }}>{children}</main>
             </Providers>
           </AppRouterCacheProvider>
         </body>
