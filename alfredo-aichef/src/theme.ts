@@ -37,18 +37,18 @@ export const darkTheme = createTheme({
     mode: 'dark',
     primary: {
       main: '#03dac6',
-      contrastText: '#000000',
+      contrastText: '#020202',
     },
     secondary: {
       main: '#45ADFF',
-      contrastText: '#000000',
+      contrastText: '#020202',
     },
     background: {
-      default: '#121212',
-      paper: '#1e1e1e',
+      default: '#020202',
+      paper: '#040404',
     },
     text: {
-      primary: '#e0e0e0',
+      primary: '#fdfdfd',
       secondary: '#aaaaaa',
     },
   },
