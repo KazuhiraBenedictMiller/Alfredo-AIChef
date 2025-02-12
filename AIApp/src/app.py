@@ -39,17 +39,24 @@ def validate_api_key(api_key: str = Security(api_key_header)):
 @app.get("/", dependencies = [Depends(validate_api_key)])
 async def read_root():
     return {"message": "Hello, World!"}
-    
+
 class IngredientDetails(BaseModel):
     Name: str
     Quantity: Union[float, int]
     Unit: str
 
-class IngredientsList(BaseModel):
+class Input(BaseModel):
     Ingredients: List[IngredientDetails]
+    SystemPrompt: str
+    UserPrompt: str
 
 @app.post("/inference/", dependencies = [Depends(validate_api_key)])
-async def predict(input: IngredientsList):
+async def predict(input: Input):
     # Implement your prediction logic here
-    result = f"Received input: {input}"
+    Ings = "\n".join([f"{x.Name}: {x.Quantity} {x.Unit}" for x in input.Ingredients])
+    result = f"""Received the Following Ingredients: \n
+    {Ings}\n
+    SystemPrompt: {input.SystemPrompt}
+    UserPrompt: {input.UserPrompt}
+    """
     return {"prediction": result}
