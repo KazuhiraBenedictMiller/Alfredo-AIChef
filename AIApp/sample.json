@@ -4,6 +4,11 @@
       "Name": "Banana",
       "Quantity": 3.00,
       "Unit": "Units"
+    },
+    {
+      "Name": "Chocolate",
+      "Quantity": 200,
+      "Unit": "Grams"
     }
   ]
 }
