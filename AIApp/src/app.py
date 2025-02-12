@@ -40,6 +40,11 @@ def validate_api_key(api_key: str = Security(api_key_header)):
 async def read_root():
     return {"message": "Hello, World!"}
 
+# Status endpoint
+@app.get("/status/", dependencies=[Depends(validate_api_key)])
+async def get_status():
+    return {"status": "Healthy", "message": "API is running fine."}
+
 class IngredientDetails(BaseModel):
     Name: str
     Quantity: Union[float, int]
@@ -54,9 +59,6 @@ class Input(BaseModel):
 async def predict(input: Input):
     # Implement your prediction logic here
     Ings = "\n".join([f"{x.Name}: {x.Quantity} {x.Unit}" for x in input.Ingredients])
-    result = f"""Received the Following Ingredients: \n
-    {Ings}\n
-    SystemPrompt: {input.SystemPrompt}
-    UserPrompt: {input.UserPrompt}
+    result = f"""Received the Following Ingredients: {Ings} SystemPrompt: {input.SystemPrompt} UserPrompt: {input.UserPrompt}
     """
     return {"prediction": result}

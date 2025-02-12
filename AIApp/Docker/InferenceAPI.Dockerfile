@@ -1,7 +1,9 @@
 # cd AIChef/AIApp/
 # DOCKER_BUILDKIT=1
 # docker build -t aiinferenceapi -f Docker/InferenceAPI.Dockerfile .
-# docker run --name AIInference -e ACTUAL_API_KEY="$VALID_API_KEY" -d -it -p 8000:8000 aiinferenceapi 
+# docker run --name AIInference -e ACTUAL_API_KEY="API_KEY" -d -it -p 8000:8000 aiinferenceapi 
+#FOR DEV
+# docker run --name AIInference -v ./:/app -e ACTUAL_API_KEY="AlfredoAIAPIEndpoint" -d -it -p 8000:8000 aiinferenceapi 
 
 # The builder image, used to build the virtual environment
 FROM python:3.13 AS builder
@@ -46,4 +48,4 @@ COPY src ./
 EXPOSE 8000
 
 # Command to run the application
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
