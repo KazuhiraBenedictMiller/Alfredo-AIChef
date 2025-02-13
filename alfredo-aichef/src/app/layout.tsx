@@ -4,7 +4,7 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import { ClerkProvider, UserButton } from '@clerk/nextjs';
 import { Providers } from './providers';
-import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
+import { ThemeProvider } from '@/store/theme';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -24,16 +24,17 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="en">
         <body className={inter.className}>
           <header>
             <UserButton showName />
           </header>
           <AppRouterCacheProvider>
-            <InitColorSchemeScript attribute="class" />
-            <Providers>
-              <main style={{ height: '100vh' }}>{children}</main>
-            </Providers>
+            <ThemeProvider>
+              <Providers>
+                <main style={{ height: '100vh' }}>{children}</main>
+              </Providers>
+            </ThemeProvider>
           </AppRouterCacheProvider>
         </body>
       </html>

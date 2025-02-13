@@ -1,22 +1,24 @@
 'use client';
 
-import { FormControlLabel, styled, Switch } from '@mui/material';
+import { useThemeContext } from '@/store/theme';
+import { styled, Switch } from '@mui/material';
 // import { useState } from 'react';
 
 export const ThemeButton = () => {
-  // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)', {
-  //   noSsr: true,
-  // });
-  // const [mode, setMode] = useState(prefersDarkMode ? 'dark' : 'light');
+  const theme = useThemeContext();
 
-  // const handleClick = () => {
-  //   setMode((prevMode) => (prevMode === 'dark' ? 'light' : 'dark'));
-  // }
+  const toggleTheme = (
+    _: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean
+  ) => {
+    theme.set(checked ? 'dark' : 'light');
+  };
 
   return (
-    <FormControlLabel
-      control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
-      label=""
+    <MaterialUISwitch
+      sx={{ m: 1 }}
+      checked={theme.mode === 'dark'}
+      onChange={toggleTheme}
     />
   );
 };
