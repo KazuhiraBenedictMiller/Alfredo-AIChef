@@ -1,7 +1,9 @@
 # cd AIChef/AIApp/
 # DOCKER_BUILDKIT=1
 # docker build -t aiinferenceapi -f Docker/InferenceAPI.Dockerfile .
-# docker run --name AIInference -e ACTUAL_API_KEY="$VALID_API_KEY" -d -it -p 8000:8000 aiinferenceapi 
+# docker run --name AIInference -e ACTUAL_API_KEY="API_KEY" -d -it -p 8000:8000 aiinferenceapi 
+#FOR DEV
+# docker run --name AIInference -v ./:/app -e ACTUAL_API_KEY="AlfredoAIAPIEndpoint" -d -it -p 8000:8000 aiinferenceapi 
 
 # The builder image, used to build the virtual environment
 FROM python:3.13 AS builder
@@ -17,7 +19,7 @@ ENV POETRY_VERSION=2.0.1 \
 RUN pip install poetry==$POETRY_VERSION
 
 # Set the Working Directory
-WORKDIR /app
+WORKDIR /
 
 # Copying only Necessary Files
 COPY pyproject.toml poetry.lock ./
@@ -31,19 +33,19 @@ RUN poetry install --without dev --no-root && rm -rf $POETRY_CACHE_DIR
 # The runtime image, used to just run the code provided its virtual environment (Passed by the Builder Image)
 FROM python:3.13-slim AS runtime
 
-ENV VIRTUAL_ENV=/app/.venv \
-    PATH="/app/.venv/bin:$PATH"	
+ENV VIRTUAL_ENV=/.venv \
+    PATH="/.venv/bin:$PATH"	
 
 COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /
 
 # Copying Data
-COPY src ./
+COPY src ./app
 
 # Expose the port FastAPI will run on
 EXPOSE 8000
 
 # Command to run the application
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
