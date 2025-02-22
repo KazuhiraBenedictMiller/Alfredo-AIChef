@@ -45,24 +45,35 @@ async def read_root():
 async def get_status():
     return {"status": "Healthy", "message": "API is running fine."}
 
+
+
+
 class IngredientDetails(BaseModel):
     Name: str
     Quantity: Union[float, int]
     Unit: str
 
+class Interaction(BaseModel):
+    UserPrompt: str
+    AIPrompt: Optional[str] = None
+
 class Input(BaseModel):
     Ingredients: List[IngredientDetails]
     SystemPrompt: Optional[str] = None
-    UserPrompt: Optional[str] = None
+    Interactions: List[Interaction] = [] #change from two optional strings to a list of interaction objects
 
 @app.post("/inference/", dependencies=[Depends(validate_api_key)])
 async def predict(input: Input):
     # Implement your prediction logic here
     Ings = "\n".join([f"{x.Name}: {x.Quantity} {x.Unit}" for x in input.Ingredients])
-    system_prompt = input.SystemPrompt if input.SystemPrompt else "Default System Prompt"
-    user_prompt = input.UserPrompt if input.UserPrompt else "Default User Prompt"
-    result = f"""Received the Following Ingredients: {Ings}
-    SystemPrompt: {system_prompt}
-    UserPrompt: {user_prompt}
+    systemPrompt = input.SystemPrompt if input.SystemPrompt else "Default System Prompt"
+    interactionsString = "\n".join([
+        f"UserPrompt: {interaction.UserPrompt}\n" + (f"AIPrompt: {interaction.AIPrompt}" if interaction.AIPrompt else "")
+        for interaction in input.Interactions
+    ])
+
+    Result = f"""Received the Following Ingredients: {Ings}
+    SystemPrompt: {systemPrompt}
+    Interactions:\n{interactionsString}
     """
-    return {"prediction": result}
+    return {"Prediction": Result}

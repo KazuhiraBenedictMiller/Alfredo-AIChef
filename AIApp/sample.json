@@ -12,5 +12,9 @@
     }
   ],
   "SystemPrompt": "You are a Very Cool AI Chef...",
-  "UserPrompt": "Hi I would like to eat something..."
+  "UserPrompt": "Hi I would like to eat something...",
+  "AIPrompt": "Sure what is your favourite taste?",
+  "UserPrompt": "I would like something sweet",
+  "AIPrompt": "here's a recipe...",
+  "UserPrompt": "Thank you so much"
 }
