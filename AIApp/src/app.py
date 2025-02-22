@@ -45,9 +45,6 @@ async def read_root():
 async def get_status():
     return {"status": "Healthy", "message": "API is running fine."}
 
-
-
-
 class IngredientDetails(BaseModel):
     Name: str
     Quantity: Union[float, int]
@@ -67,10 +64,12 @@ async def predict(input: Input):
     # Implement your prediction logic here
     Ings = "\n".join([f"{x.Name}: {x.Quantity} {x.Unit}" for x in input.Ingredients])
     systemPrompt = input.SystemPrompt if input.SystemPrompt else "Default System Prompt"
-    interactionsString = "\n".join([
-        f"UserPrompt: {interaction.UserPrompt}\n" + (f"AIPrompt: {interaction.AIPrompt}" if interaction.AIPrompt else "")
-        for interaction in input.Interactions
-    ])
+    interactionsString =  ""
+
+    for interaction in input.Interactions:
+        interactionsString += f"UserPrompt: {interaction.UserPrompt}\n"
+        if interaction.AIPrompt:
+            interactionsString += f"AIPrompt: {interaction.AIPrompt}\n"
 
     Result = f"""Received the Following Ingredients: {Ings}
     SystemPrompt: {systemPrompt}
