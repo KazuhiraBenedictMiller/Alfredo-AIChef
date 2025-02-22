@@ -58,16 +58,19 @@ class Interaction(BaseModel):
 class Input(BaseModel):
     Ingredients: List[IngredientDetails]
     SystemPrompt: Optional[str] = None
-    Interactions: Dict[str, str] = {}
+    Interactions: List[Dict[str, str]] = {}
 
 @app.post("/inference/", dependencies = [Depends(validate_api_key)])
 async def predict(input: Input):
     # Implement your prediction logic here
     Ings = "\n".join([f"{x.Name}: {x.Quantity} {x.Unit}" for x in input.Ingredients])
     systemPrompt = input.SystemPrompt if input.SystemPrompt else "Default System Prompt"
-    interactionsString =  "".join(f"{Persona}: {Message}" for Persona, Message in input.Interactions.items())
+    interactionsString = ""
+    for interaction in input.Interactions:
+        for Persona, Prompt in interaction.items():
+            interactionsString += f"{Persona}: {Prompt}\n"
     Result = f"""Received the Following Ingredients: {Ings}
     SystemPrompt: {systemPrompt}
-    Interactions:\n{interactionsString}
+    Interactions: {interactionsString}
     """
     return {"Prediction": Result}
