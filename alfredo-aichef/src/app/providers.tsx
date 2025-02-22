@@ -1,25 +1,17 @@
 'use client';
+import { useThemeContext } from '@/store/theme';
 import { darkTheme, lightTheme } from '@/theme';
-import { ThemeProvider, useMediaQuery } from '@mui/material';
-// import { useEffect, useMemo, useState } from 'react';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 
 type Props = {
   children: React.ReactNode;
 };
 
 export const Providers = ({ children }: Props) => {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)', {
-    defaultMatches: false,
-    noSsr: true,
-  });
-
-  // Optionally, update the mode if the user's system settings change.
-  // useEffect(() => {
-  //   setMode(prefersDarkMode ? 'dark' : 'light');
-  // }, [prefersDarkMode]);
-
+  const theme = useThemeContext();
   return (
-    <ThemeProvider theme={prefersDarkMode ? darkTheme : lightTheme}>
+    <ThemeProvider theme={theme?.mode === 'dark' ? darkTheme : lightTheme}>
+      <CssBaseline enableColorScheme />
       {children}
     </ThemeProvider>
   );

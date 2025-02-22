@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import './globals.css';
 import { Inter } from 'next/font/google';
-import { ClerkProvider, SignedOut, UserButton } from '@clerk/nextjs';
+import { ClerkProvider, UserButton } from '@clerk/nextjs';
 import { Providers } from './providers';
+import { ThemeProvider } from '@/store/theme';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -23,17 +24,17 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="en">
         <body className={inter.className}>
           <header>
             <UserButton showName />
           </header>
           <AppRouterCacheProvider>
-            <Providers>
-              <main style={{ height: '100vh' }}>
-                <SignedOut>{children}</SignedOut>
-              </main>
-            </Providers>
+            <ThemeProvider>
+              <Providers>
+                <main style={{ height: '100vh' }}>{children}</main>
+              </Providers>
+            </ThemeProvider>
           </AppRouterCacheProvider>
         </body>
       </html>
