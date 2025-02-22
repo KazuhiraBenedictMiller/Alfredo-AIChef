@@ -12,7 +12,7 @@ from fastapi import FastAPI, Depends, HTTPException, Security
 from fastapi.security.api_key import APIKeyHeader
 from starlette.status import HTTP_403_FORBIDDEN
 from pydantic import BaseModel
-from typing import Union, Optional, List
+from typing import Union, Optional, Dict, List
 import os
 
 app = FastAPI()
@@ -41,7 +41,7 @@ async def read_root():
     return {"message": "Hello, World!"}
 
 # Status endpoint
-@app.get("/status/", dependencies=[Depends(validate_api_key)])
+@app.get("/status/", dependencies = [Depends(validate_api_key)])
 async def get_status():
     return {"status": "Healthy", "message": "API is running fine."}
 
@@ -51,26 +51,20 @@ class IngredientDetails(BaseModel):
     Unit: str
 
 class Interaction(BaseModel):
-    UserPrompt: str
+    UserPrompt: Optional[str] = None
     AIPrompt: Optional[str] = None
 
 class Input(BaseModel):
     Ingredients: List[IngredientDetails]
     SystemPrompt: Optional[str] = None
-    Interactions: List[Interaction] = [] #change from two optional strings to a list of interaction objects
+    Interactions: Dict[str: str] = []
 
-@app.post("/inference/", dependencies=[Depends(validate_api_key)])
+@app.post("/inference/", dependencies = [Depends(validate_api_key)])
 async def predict(input: Input):
     # Implement your prediction logic here
     Ings = "\n".join([f"{x.Name}: {x.Quantity} {x.Unit}" for x in input.Ingredients])
     systemPrompt = input.SystemPrompt if input.SystemPrompt else "Default System Prompt"
-    interactionsString =  ""
-
-    for interaction in input.Interactions:
-        interactionsString += f"UserPrompt: {interaction.UserPrompt}\n"
-        if interaction.AIPrompt:
-            interactionsString += f"AIPrompt: {interaction.AIPrompt}\n"
-
+    interactionsString =  "".join(f"{Persona}: {Message}" for Persona, Message in Interactions)
     Result = f"""Received the Following Ingredients: {Ings}
     SystemPrompt: {systemPrompt}
     Interactions:\n{interactionsString}
