@@ -14,6 +14,7 @@ from starlette.status import HTTP_403_FORBIDDEN
 from pydantic import BaseModel
 from typing import Union, Optional, Dict, List
 import os
+import json
 
 app = FastAPI()
 
@@ -57,14 +58,14 @@ class Interaction(BaseModel):
 class Input(BaseModel):
     Ingredients: List[IngredientDetails]
     SystemPrompt: Optional[str] = None
-    Interactions: Dict[str: str] = []
+    Interactions: Dict[str, str] = {}
 
 @app.post("/inference/", dependencies = [Depends(validate_api_key)])
 async def predict(input: Input):
     # Implement your prediction logic here
     Ings = "\n".join([f"{x.Name}: {x.Quantity} {x.Unit}" for x in input.Ingredients])
     systemPrompt = input.SystemPrompt if input.SystemPrompt else "Default System Prompt"
-    interactionsString =  "".join(f"{Persona}: {Message}" for Persona, Message in Interactions)
+    interactionsString =  "".join(f"{Persona}: {Message}" for Persona, Message in input.Interactions.items())
     Result = f"""Received the Following Ingredients: {Ings}
     SystemPrompt: {systemPrompt}
     Interactions:\n{interactionsString}
