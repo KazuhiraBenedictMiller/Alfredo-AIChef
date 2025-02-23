@@ -6,11 +6,13 @@ authors = [
     {name = "KazuhiraBenedictMiller",email = "aaserravalle.py@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.13,<4.0"
 dependencies = [
     "fastapi (>=0.115.8,<0.116.0)",
     "uvicorn (>=0.34.0,<0.35.0)",
-    "pydantic (>=2.10.6,<3.0.0)"
+    "pydantic (>=2.10.6,<3.0.0)",
+    "langchain (>=0.3.19,<0.4.0)",
+    "langchain-google-genai (>=2.0.10,<3.0.0)"
 ]
 
 

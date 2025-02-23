@@ -13,9 +13,11 @@ from fastapi.security.api_key import APIKeyHeader
 from starlette.status import HTTP_403_FORBIDDEN
 from pydantic import BaseModel
 from typing import Union, Optional, Dict, List
-from datetime import datetime
+from langchain_google_genai import ChatGoogleGenerativeAI
+# More Langchian Packages
+from langchain_core.prompts import ChatPromptTemplate
 import os
-import json
+from datetime import datetime
 
 app = FastAPI()
 
@@ -25,6 +27,7 @@ api_key_header = APIKeyHeader(name = "Auth")
 # VALID_API_KEYS = {"mattbelcher", "aaserravalle"}
 
 VALID_API_KEY = os.environ.get("ACTUAL_API_KEY")
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 
 def validate_api_key(api_key: str = Security(api_key_header)):
     if api_key is None:
@@ -95,6 +98,7 @@ async def ReturnInputs(input: Input):
 
 @app.post("/inference/", dependencies = [Depends(validate_api_key)])
 async def Predict(input: Input):
+    '''
     # Implement your prediction logic here
     Ings = "\n".join([f"{x.Name}: {x.Quantity} {x.Unit}" for x in input.Ingredients])
     systemPrompt = input.SystemPrompt if input.SystemPrompt else "Default System Prompt"
@@ -103,4 +107,34 @@ async def Predict(input: Input):
     SystemPrompt: {systemPrompt}
     Interactions: {interactionsString}
     """
-    return {"Prediction": Result}
+    '''
+
+    LLM = ChatGoogleGenerativeAI(
+        model = "gemini-1.5-flash",
+        temperature = 0,
+        max_tokens = None,
+        timeout = None,
+        max_retries = 3,
+    )
+
+    Prompt = ChatPromptTemplate.from_messages(
+        [
+            (
+                "system",
+                "You are a Very Cool AI Chef named {AIName} with {Roots} roots",
+            ),
+            ("human", "{Input}"),
+        ]
+    )
+
+    Chain = Prompt | LLM
+    Recipe = Chain.invoke(
+        {
+            "AIName": "Alfredo",
+            "Roots": "Italian",
+            "Input": "I have 2 Bananas, 200 Grams of Chocolate, and Some Milk, can you suggest a cool recipe for me to cook?",
+        }
+    )
+
+
+    return Recipe

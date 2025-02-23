@@ -10,7 +10,13 @@ SpinContainer:
 	@docker run --name AIInference -d -it -e ACTUAL_API_KEY="AlfredoAIAPIEndpoint" -p 8000:8000 aiinferenceapi 
 
 SpinDevFastAPI:
-	@ACTUAL_API_KEY="AlfredoAIAPIEndpoint" poetry run uvicorn src.app:app --host 0.0.0.0 --port 8000 --reload
+	@ACTUAL_API_KEY="AlfredoAIAPIEndpoint" GOOGLE_API_KEY="AIzaSyD2PKaRVlTeXVNRVdyOvCw59KZj2Hv1Iw4" poetry run uvicorn src.app:app --host 0.0.0.0 --port 8000 --reload
+
+DevInference:
+	@./DevLazyCurl.sh > aiappout.json
+
+ProdInference:
+	@./LazuCurl.sh > aiappout.json 
 
 ReloadAPI:
 	@docker restart APIInference
