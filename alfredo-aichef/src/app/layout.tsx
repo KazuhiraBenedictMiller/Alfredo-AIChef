@@ -2,9 +2,10 @@ import type { Metadata } from 'next';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import './globals.css';
 import { Inter } from 'next/font/google';
-import { ClerkProvider, UserButton } from '@clerk/nextjs';
+import { ClerkProvider } from '@clerk/nextjs';
 import { Providers } from './providers';
 import { ThemeProvider } from '@/store/theme';
+import { Main } from '@/components/feature/main';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -25,14 +26,14 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>
-          <header>
-            <UserButton showName />
-          </header>
+        <body
+          className={inter.className}
+          style={{ display: 'flex', flexDirection: 'column' }}
+        >
           <AppRouterCacheProvider>
             <ThemeProvider>
               <Providers>
-                <main style={{ height: '100vh' }}>{children}</main>
+                <Main>{children}</Main>
               </Providers>
             </ThemeProvider>
           </AppRouterCacheProvider>

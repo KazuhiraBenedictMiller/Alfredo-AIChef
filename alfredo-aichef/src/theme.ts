@@ -1,12 +1,24 @@
 import { createTheme } from '@mui/material/styles';
 
+type MuiComponents = ReturnType<typeof createTheme>['components'];
+
+const commonStyleComponents: MuiComponents = {
+  MuiButton: {
+    styleOverrides: {
+      root: {
+        borderRadius: '4rem',
+      },
+    },
+  },
+};
+
 export const lightTheme = createTheme({
   cssVariables: true,
   palette: {
     mode: 'light',
     primary: {
       main: '#50e3c2',
-      contrastText: '#fdfdfd',
+      contrastText: '#020202',
     },
     secondary: {
       main: '#008fff',
@@ -22,13 +34,26 @@ export const lightTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: 'var(--font-inter), sans-serif',
+    fontFamily: 'Inter, sans-serif',
     fontSize: 16,
     fontWeightRegular: 400,
     fontWeightBold: 700,
     // You can add more typography settings as needed
   },
   spacing: 8, // For example, 8px times the factor you assign to spacing values
+  components: {
+    ...commonStyleComponents,
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: '4rem',
+        },
+        outlined: {
+          color: '#020202',
+        },
+      },
+    },
+  },
 });
 
 export const darkTheme = createTheme({
@@ -59,4 +84,5 @@ export const darkTheme = createTheme({
     fontWeightBold: 700,
   },
   spacing: 8,
+  components: commonStyleComponents,
 });
