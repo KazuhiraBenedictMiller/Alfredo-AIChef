@@ -116,6 +116,8 @@ async def Predict(input: Input):
         timeout = None,
         max_retries = 3,
     )
+    
+    humanPrompt = "{Input}"
 
     Prompt = ChatPromptTemplate.from_messages(
         [
