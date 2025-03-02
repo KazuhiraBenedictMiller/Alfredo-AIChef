@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a8b6c90f-dd28-4a45-8427-9b1f82cbd572" name="Changes" comment="Added body styling (simple) so login modal will appear in middle of page. added vercelignore to keep &quot;AIApp&quot; Directory out of future vercel deployments.">
+      <change beforePath="$PROJECT_DIR$/alfredo-aichef/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/alfredo-aichef/src/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alfredo-aichef/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/alfredo-aichef/src/app/layout.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;OneByteToRuleThemAll&quot;
+  }
+}</component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="3a734fea-5738-4133-9105-8a296f22d69c" />
+  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/KazuhiraBenedictMiller/Alfredo-AIChef.git&quot;,
+    &quot;accountId&quot;: &quot;3a734fea-5738-4133-9105-8a296f22d69c&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2sdv6Mq7sj5ETEjAy3JfVnNrIaI" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "dev",
+    "last_opened_file_path": "C:/Users/matty/Sites/Alfredo-AIChef/alfredo-aichef",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "ts.external.directory.path": "C:\\Users\\matty\\Sites\\Alfredo-AIChef\\alfredo-aichef\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\matty\Sites\Alfredo-AIChef\alfredo-aichef\src" />
+      <recent name="C:\Users\matty\Sites\Alfredo-AIChef\alfredo-aichef\src\app" />
+      <recent name="C:\Users\matty\Sites\Alfredo-AIChef\alfredo-aichef" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-WS-243.23654.157" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a8b6c90f-dd28-4a45-8427-9b1f82cbd572" name="Changes" comment="" />
+      <created>1738798090606</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1738798090606</updated>
+      <workItem from="1738798092049" duration="332000" />
+      <workItem from="1738798434869" duration="6437000" />
+      <workItem from="1738805816332" duration="2840000" />
+      <workItem from="1738824292550" duration="22000" />
+    </task>
+    <task id="LOCAL-00001" summary="Installed and test Clerk. Working with github authorization. Dont try to run on &quot;localhost:3000, known bug creates auth error. Run on &quot;Network ex: &quot;10.x.x.x:3000">
+      <option name="closed" value="true" />
+      <created>1738803869374</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1738803869374</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added body styling (simple) so login modal will appear in middle of page. added vercelignore to keep &quot;AIApp&quot; Directory out of future vercel deployments.">
+      <option name="closed" value="true" />
+      <created>1738804869306</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1738804869306</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added body styling (simple) so login modal will appear in middle of page. added vercelignore to keep &quot;AIApp&quot; Directory out of future vercel deployments.">
+      <option name="closed" value="true" />
+      <created>1738807453931</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1738807453931</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Installed and test Clerk. Working with github authorization. Dont try to run on &quot;localhost:3000, known bug creates auth error. Run on &quot;Network ex: &quot;10.x.x.x:3000" />
+    <MESSAGE value="Added body styling (simple) so login modal will appear in middle of page. added vercelignore to keep &quot;AIApp&quot; Directory out of future vercel deployments." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added body styling (simple) so login modal will appear in middle of page. added vercelignore to keep &quot;AIApp&quot; Directory out of future vercel deployments." />
+  </component>
+</project>
