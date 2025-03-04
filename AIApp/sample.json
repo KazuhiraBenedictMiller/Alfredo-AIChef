@@ -1,0 +1,22 @@
+{
+  "Ingredients": [
+    {
+      "Name": "Banana",
+      "Quantity": 3.00,
+      "Unit": "Units"
+    },
+    {
+      "Name": "Chocolate",
+      "Quantity": 200,
+      "Unit": "Grams"
+    }
+  ],
+  "SystemPrompt": "You are a Very Cool AI Chef...",
+  "Interactions": [ 
+    {"UserPrompt": "Hi I would like to eat something..."},
+    {"AIPrompt": "Sure what is your favourite taste?"},
+    {"UserPrompt": "I would like something sweet"},
+    {"AIPrompt": "here's a recipe..."},
+    {"UserPrompt": "Thank you so much"}
+  ]
+}

@@ -1,0 +1,6 @@
+Docker/
+tests/
+src/__pycache__/
+AlfredoAIAPI.pem
+Makefile
+README.md
