@@ -1,7 +1,12 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Cta } from '@/components/feature/cta';
+import { auth } from '@clerk/nextjs/server';
+import { Box, Stack } from '@mui/material';
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const { userId } = await auth();
+  if (userId) return redirect('/dashboard');
   return (
     <Stack
       height={'100%'}
@@ -9,38 +14,7 @@ export default function LandingPage() {
       justifyContent={'center'}
       alignItems={'center'}
     >
-      {/* <Link href="/auth/login">
-        <Button variant="contained">Login</Button>
-      </Link>
-      <ThemeButton /> */}
-      <Stack
-        flex={1}
-        height={'100%'}
-        width={36}
-        alignItems={'center'}
-        justifyContent={'center'}
-        sx={{
-          transform: 'translateY(-10rem)',
-        }}
-        gap={2}
-      >
-        <Typography
-          variant={'h2'}
-          fontWeight={700}
-          sx={{
-            background: 'linear-gradient(90deg, #020202 0%, #50E3C2 100%);',
-            backgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            textAlign: 'center',
-          }}
-        >
-          AI-Powered Chef Instant Recipes
-        </Typography>
-        <Typography variant={'h6'}>
-          Your Pantry, Our Chef: Instant Recipes from what you have!
-        </Typography>
-        <Button variant="contained">Try it now</Button>
-      </Stack>
+      <Cta />
       <Box flex={1} height={'100%'} position={'relative'}>
         <Image
           src="/robot-landing.svg"
