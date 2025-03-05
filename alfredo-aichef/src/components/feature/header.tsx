@@ -3,25 +3,22 @@ import { useThemeContext } from '@/store/theme';
 import { MaterialUISwitch } from '../common/theme-button';
 import { Button, Stack } from '@mui/material';
 import { Logo } from './logo';
-import Link from 'next/link';
-import { SignInButton, SignUpButton, useAuth } from '@clerk/nextjs';
-import { useRouter } from 'next/navigation';
+import {
+  SignInButton,
+  SignOutButton,
+  SignUpButton,
+  useAuth,
+} from '@clerk/nextjs';
 
 export const Header = () => {
   const theme = useThemeContext();
-  const { isSignedIn, signOut } = useAuth();
-  const router = useRouter();
+  const { isSignedIn } = useAuth();
 
   const toggleTheme = (
     _: React.ChangeEvent<HTMLInputElement>,
     checked: boolean
   ) => {
     theme.set(checked ? 'dark' : 'light');
-  };
-
-  const handleLogout = async () => {
-    await signOut();
-    router.push('/');
   };
 
   return (
@@ -43,19 +40,17 @@ export const Header = () => {
         />
         {!isSignedIn ? (
           <Stack direction={'row'} gap={1}>
-            <SignInButton>
+            <SignInButton fallbackRedirectUrl="/dashboard">
               <Button variant="outlined">Sign In</Button>
             </SignInButton>
-            <SignUpButton>
+            <SignUpButton fallbackRedirectUrl="/dashboard">
               <Button variant="contained">Sign Up</Button>
             </SignUpButton>
           </Stack>
         ) : (
-          <Link href="/auth/login">
-            <Button variant="outlined" onClick={handleLogout}>
-              Log out
-            </Button>
-          </Link>
+          <SignOutButton redirectUrl="/">
+            <Button variant="outlined">Log out</Button>
+          </SignOutButton>
         )}
       </Stack>
 
