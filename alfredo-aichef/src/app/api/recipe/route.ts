@@ -23,10 +23,10 @@ async function run(userInput: string): Promise<string> {
   const chatSession = model.startChat({
     generationConfig,
     history: [
-      {
-        role: 'user',
-        parts: [{ text: '300 grams chicken thighs, olive oil, barilla pasta' }],
-      },
+      // {
+      //   role: 'user',
+      //   parts: [{ text: '300 grams chicken thighs, olive oil, barilla pasta' }],
+      // },
     ],
   });
 
