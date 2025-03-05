@@ -1,6 +1,10 @@
 import { SignedIn } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 
 // @Marco, I created these routes for you, hopefully it will help.
-export default function Home() {
-  return <SignedIn>Hello from the dashboard!</SignedIn>;
+export default async function DashboardPage() {
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
+
+  return <SignedIn>Hello, {userId}</SignedIn>;
 }
