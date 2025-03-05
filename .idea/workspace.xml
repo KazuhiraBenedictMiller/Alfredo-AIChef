@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8b6c90f-dd28-4a45-8427-9b1f82cbd572" name="Changes" comment="Added body styling (simple) so login modal will appear in middle of page. added vercelignore to keep &quot;AIApp&quot; Directory out of future vercel deployments.">
-      <change beforePath="$PROJECT_DIR$/alfredo-aichef/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/alfredo-aichef/src/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alfredo-aichef/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/alfredo-aichef/src/app/layout.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="a8b6c90f-dd28-4a45-8427-9b1f82cbd572" name="Changes" comment="Added body styling (simple) so login modal will appear in middle of page. added vercelignore to keep &quot;AIApp&quot; Directory out of future vercel deployments." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,7 +48,8 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "dev",
+    "git-widget-placeholder": "feat/landing",
+    "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/matty/Sites/Alfredo-AIChef/alfredo-aichef",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -74,7 +72,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-WS-243.23654.157" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-WS-243.25659.40" />
       </set>
     </attachedChunks>
   </component>
@@ -90,6 +88,7 @@
       <workItem from="1738798434869" duration="6437000" />
       <workItem from="1738805816332" duration="2840000" />
       <workItem from="1738824292550" duration="22000" />
+      <workItem from="1740934610112" duration="689000" />
     </task>
     <task id="LOCAL-00001" summary="Installed and test Clerk. Working with github authorization. Dont try to run on &quot;localhost:3000, known bug creates auth error. Run on &quot;Network ex: &quot;10.x.x.x:3000">
       <option name="closed" value="true" />
