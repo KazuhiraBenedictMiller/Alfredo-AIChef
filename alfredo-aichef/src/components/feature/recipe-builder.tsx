@@ -1,36 +1,49 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+'use client';
 
-type Props = {}
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+import React, { useState } from 'react';
 
-const RecipeBuilder = (props: Props) => {
+// type Props = {};
+
+export const RecipeBuilder = () => {
   const [ingredients, setIngredients] = useState<string>('');
-  const query = useMutation({
+
+  const { data, isError, error, isPending, mutateAsync } = useMutation({
     mutationFn: async () => {
       try {
-        const response = await fetch('/api/recipe', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ ingredients }),
+        const { data } = await axios.post('/api/recipe', {
+          ingredients,
         });
-        console.log("response status:", response.status);
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch recipe');
+        return data;
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          throw new Error(err.message);
         }
-
-
-        return await response.json();
-      } catch (err: any) {
-        console.error('Error fetching recipe:', err);
-
       }
     },
-  })
+  });
 
-return (
-  <div>RecipeBuilder</div>
-  )
-}
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    mutateAsync();
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={ingredients}
+          onChange={(e) => setIngredients(e.target.value)}
+          placeholder="Enter ingredients"
+        />
+        <button type="submit" disabled={isPending}>
+          {isPending ? 'Loading...' : 'Get Recipe'}
+        </button>
+      </form>
+      {isError || (!data && <p style={{ color: 'red' }}>{error}</p>)}
+      {data && { data }}
+    </div>
+  );
+};
