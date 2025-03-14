@@ -20,7 +20,7 @@ export const GradientTitle = ({ title }: Props) => {
             : 'linear-gradient(90deg, #020202 0%, #50E3C2 100%);',
         backgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
-        textAlign: 'center',
+        // textAlign: 'center',
       }}
     >
       {title}

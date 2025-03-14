@@ -49,7 +49,7 @@ export const Header = () => {
           </Stack>
         ) : (
           <SignOutButton redirectUrl="/">
-            <Button variant="outlined">Log out</Button>
+            <Button variant="contained">Sign out</Button>
           </SignOutButton>
         )}
       </Stack>

@@ -48,12 +48,18 @@ export const RecipeBuilderV2 = () => {
     setAmount(0);
   };
 
+  const handleReset = () => {
+    setRows([]);
+    setSelectedIngredient('');
+    setAmount(0);
+  };
+
   const addDisabled = selectedIngredient === '' || amount === 0;
 
   return (
-    <Stack gap={1}>
+    <Stack gap={2}>
       <GradientTitle title="Hi there, user! What are you going to cook today?" />
-      <Stack flexDirection={'row'} gap={1} justifyContent={'space-between'}>
+      <Stack flexDirection={'row'} gap={1} justifyContent={'flex-start'} mt={2}>
         <IngredientSelect
           options={ingredients}
           selected={selectedIngredient}
@@ -75,7 +81,15 @@ export const RecipeBuilderV2 = () => {
         </Button>
       </Stack>
       <IngredientDg rows={rows}></IngredientDg>
-      <Stack flexDirection={'row'} gap={1} justifyContent={'flex-end'}>
+      <Stack flexDirection={'row'} gap={1} justifyContent={'space-between'}>
+        <Button
+          onClick={handleReset}
+          variant="outlined"
+          color="error"
+          fullWidth={false}
+        >
+          Reset
+        </Button>
         <Button
           variant="contained"
           startIcon={<AutoAwesomeIcon />}
