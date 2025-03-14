@@ -19,7 +19,11 @@ interface ApiResponse {
 export const RecipeBuilder = () => {
   const [ingredients, setIngredients] = useState<string>('');
 
-  const { data, isError, error, isPending, mutateAsync } = useMutation<ApiResponse, Error, { ingredients: string }>({
+  const { data, isError, error, isPending, mutateAsync } = useMutation<
+    ApiResponse,
+    Error,
+    { ingredients: string }
+  >({
     mutationFn: async ({ ingredients }) => {
       try {
         const { data } = await axios.post<ApiResponse>('/api/recipe', {
@@ -60,7 +64,14 @@ export const RecipeBuilder = () => {
             try {
               const recipes: RecipeIngredient[] = JSON.parse(data.recipe);
               return recipes.map((recipe, index) => (
-                <div key={index} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px' }}>
+                <div
+                  key={index}
+                  style={{
+                    border: '1px solid #ccc',
+                    padding: '10px',
+                    margin: '10px',
+                  }}
+                >
                   <h3>{recipe.dish_name}</h3>
                   <h4>Ingredients:</h4>
                   <ul>
@@ -74,7 +85,7 @@ export const RecipeBuilder = () => {
                   <p>Cooking Time: {recipe.cooking_time}</p>
                 </div>
               ));
-            } catch (e) {
+            } catch {
               return <p>Error parsing recipe data.</p>;
             }
           })()}
