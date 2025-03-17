@@ -8,6 +8,8 @@ import { GradientTitle } from '../common/gradient-title';
 import AddIcon from '@mui/icons-material/Add';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 
 const ingredients = [
   { label: 'Tomato', value: 'tomato' },
@@ -28,11 +30,59 @@ const ingredients = [
   { label: 'Dill', value: 'dill' },
 ];
 
+// interface RecipeIngredient {
+//   dish_name: string;
+//   ingredients: string[];
+//   cooking_instructions: string;
+//   prep_time: string;
+//   cooking_time: string;
+// }
+
+interface ApiResponse {
+  recipe: string; // The inner JSON string
+}
+
+export type RecipePayload = Partial<IngredientRow>;
+
 export const RecipeBuilderV2 = () => {
+  // const builder = useRecipeBuilder();
   const [amount, setAmount] = useState<number>(0);
   const [unit, setUnit] = useState<'g' | 'kg' | 'ml' | 'pcs'>('g');
   const [rows, setRows] = useState<IngredientRow[]>([]);
   const [selectedIngredient, setSelectedIngredient] = useState<string>('');
+
+  const { data, isPending, mutateAsync } = useMutation<
+    ApiResponse,
+    Error,
+    { ingredients: string }
+  >({
+    mutationFn: async ({ ingredients }) => {
+      try {
+        const { data } = await axios.post<ApiResponse>('/api/recipe', {
+          ingredients,
+        });
+        return data;
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          throw new Error(err.message);
+        }
+        throw new Error('An unknown error occurred');
+      }
+    },
+  });
+
+  console.log({ data });
+
+  const handleGenerateClick = async () => {
+    const ingredients = rows.map(
+      (row): RecipePayload => ({
+        ingredient: row.ingredient,
+        quantity: row.quantity,
+        unit: row.unit,
+      })
+    );
+    await mutateAsync({ ingredients: JSON.stringify(ingredients) });
+  };
 
   const handleAddRow = () => {
     setRows([
@@ -94,6 +144,8 @@ export const RecipeBuilderV2 = () => {
           variant="contained"
           startIcon={<AutoAwesomeIcon />}
           fullWidth={false}
+          onClick={handleGenerateClick}
+          loading={isPending}
         >
           Generate
         </Button>
