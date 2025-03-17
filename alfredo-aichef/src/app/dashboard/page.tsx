@@ -14,9 +14,6 @@ export default async function Dashboard() {
       <Grid2 size={{ md: 12, lg: 6 }}>
         <RecipeBuilderV2 />
       </Grid2>
-      <Grid2 size={{ md: 12, lg: 6 }}>
-        <RecipeBuilder />
-      </Grid2>
     </Grid2>
   );
 }
