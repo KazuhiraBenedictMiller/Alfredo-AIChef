@@ -12,7 +12,7 @@ import {
 import { IngredientSelect } from './ingredient-select';
 import { QuantityTextField } from './quantity-textfield';
 import { IngredientDg, IngredientRow } from './ingredient-dg';
-import { GradientTitle } from '../common/gradient-title';
+import { GradientTitle } from '../../common/gradient-title';
 import AddIcon from '@mui/icons-material/Add';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { useState, useEffect } from 'react';
@@ -151,6 +151,7 @@ export const RecipeBuilderV2 = () => {
           gap={1}
           justifyContent={'flex-start'}
           mt={2}
+          flexWrap={'wrap'}
         >
           <IngredientSelect
             options={ingredients}

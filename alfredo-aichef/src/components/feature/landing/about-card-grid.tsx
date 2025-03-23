@@ -1,7 +1,7 @@
 'use client';
 
 import { Grid2, useMediaQuery } from '@mui/material';
-import { AboutCard } from '../common/about-card';
+import { AboutCard } from '../../common/about-card';
 
 export const AboutCardGrid = () => {
   const md = useMediaQuery('(max-width: 1235px)');

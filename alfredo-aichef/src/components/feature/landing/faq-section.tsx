@@ -1,7 +1,7 @@
 'use client';
 
 import { Stack, Typography } from '@mui/material';
-import { FaqAccordion } from '../common/faq-accordion';
+import { FaqAccordion } from '../../common/faq-accordion';
 import { useState } from 'react';
 
 export const FaqSection = () => {

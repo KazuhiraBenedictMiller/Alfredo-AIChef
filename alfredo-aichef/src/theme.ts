@@ -10,6 +10,11 @@ const commonStyleComponents: MuiComponents = {
       },
     },
   },
+  MuiTextField: {
+    defaultProps: {
+      size: 'small',
+    },
+  },
 };
 
 export const lightTheme = createTheme({
@@ -54,11 +59,6 @@ export const lightTheme = createTheme({
             color: '#50e3c2',
           },
         },
-      },
-    },
-    MuiTextField: {
-      defaultProps: {
-        size: 'small',
       },
     },
   },
