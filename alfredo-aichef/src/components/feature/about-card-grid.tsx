@@ -17,28 +17,28 @@ export const AboutCardGrid = () => {
         src="/1-about-card.png"
       ></AboutCard>
       <AboutCard
-        title="Tell us what you're craving"
-        subtitle="Enter your prompt and let us know what you’re in the mood for."
+        title="Let Alfredo do the research"
+        subtitle="Alfredo will do the beep-boop hard thinking. Hes an expert after all!"
         src="/2-about-card.png"
       ></AboutCard>
       <AboutCard
-        title="Tell us what you're craving"
-        subtitle="Enter your prompt and let us know what you’re in the mood for."
+        title="AI at work"
+        subtitle="Alfredo will refine his suggestions in the back-ground to ensure he delivers you top-tier results!"
         src="/3-about-card.png"
       ></AboutCard>
       <AboutCard
-        title="Tell us what you're craving"
-        subtitle="Enter your prompt and let us know what you’re in the mood for."
+        title="Pick your delights"
+        subtitle="Alfredo will hand deliver you a curated group of recipes to ensure your dinner finding struggles are over!"
         src="/4-about-card.png"
       ></AboutCard>
       <AboutCard
-        title="Tell us what you're craving"
-        subtitle="Enter your prompt and let us know what you’re in the mood for."
+        title="Not what you were hoping for?"
+        subtitle="You can ask Alfredo for a different selection! He’s really good, but"
         src="/5-about-card.png"
       ></AboutCard>
       <AboutCard
-        title="Tell us what you're craving"
-        subtitle="Enter your prompt and let us know what you’re in the mood for."
+        title="Cook and enjoy"
+        subtitle="You’ve made it this far! Enjoy your meal, we’re sure we will see you again!"
         src="/6-about-card.png"
       ></AboutCard>
     </Grid2>

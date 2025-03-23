@@ -1,17 +1,17 @@
 'use client';
 
 import { useThemeContext } from '@/store/theme';
-import { Typography } from '@mui/material';
+import { Typography, TypographyProps } from '@mui/material';
 
 type Props = {
   title: string;
-};
+} & TypographyProps;
 
-export const GradientTitle = ({ title }: Props) => {
+export const GradientTitle = ({ title, textAlign }: Props) => {
   const theme = useThemeContext();
   return (
     <Typography
-      variant={'h3'}
+      variant={'h1'}
       fontWeight={700}
       sx={{
         background:
@@ -20,7 +20,7 @@ export const GradientTitle = ({ title }: Props) => {
             : 'linear-gradient(90deg, #020202 0%, #50E3C2 100%);',
         backgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
-        // textAlign: 'center',
+        textAlign,
       }}
     >
       {title}

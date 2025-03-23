@@ -11,7 +11,7 @@ type Props = {
 
 export const AboutCard = ({ title, subtitle, src }: Props) => {
   return (
-    <Stack height={168}>
+    <Stack height={168} maxWidth={550} p={1}>
       <Divider />
       <Stack
         flexDirection={'row'}
@@ -23,7 +23,12 @@ export const AboutCard = ({ title, subtitle, src }: Props) => {
       >
         <Image src={src} alt="robot" height={80} width={80} />
         <Stack gap={1} justifyContent={'center'}>
-          <Typography variant="h6" color="primary" fontWeight={700}>
+          <Typography
+            variant="h6"
+            color="primary"
+            fontWeight={700}
+            textAlign={'start'}
+          >
             {title}
           </Typography>
           <Typography

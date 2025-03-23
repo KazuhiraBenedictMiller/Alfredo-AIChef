@@ -11,12 +11,15 @@ export const Cta = () => {
       alignItems={'center'}
       justifyContent={'center'}
       sx={{
-        transform: md ? 'translateY(0)' : 'translateY(-5rem)',
+        transform: md ? 'none' : 'translateY(-5rem)',
       }}
       gap={2}
     >
-      <GradientTitle title="AI-Powered Chef Instant Recipes"></GradientTitle>
-      <Typography variant={'h6'}>
+      <GradientTitle
+        title="AI-Powered Chef Instant Recipes"
+        textAlign={'center'}
+      ></GradientTitle>
+      <Typography variant={'h6'} textAlign={'center'}>
         Your Pantry, Our Chef: Instant Recipes from what you have!
       </Typography>
       <Button variant="contained">Try it now</Button>
