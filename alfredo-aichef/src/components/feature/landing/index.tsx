@@ -1,7 +1,7 @@
 'use client';
 
-import { AboutCardGrid } from '@/components/feature/about-card-grid';
-import { Cta } from '@/components/feature/cta';
+import { AboutCardGrid } from '@/components/feature/landing/about-card-grid';
+import { Cta } from '@/components/feature/landing/cta';
 import {
   Box,
   Container,
@@ -10,8 +10,9 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import Image from 'next/image';
-import { FaqSection } from '@/components/feature/faq-section';
+import { FaqSection } from '@/components/feature/landing/faq-section';
 import { useThemeContext } from '@/store/theme';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 export const Landing = () => {
   const md = useMediaQuery('(max-width: 1235px)');
@@ -19,7 +20,8 @@ export const Landing = () => {
   return (
     <>
       <Stack
-        height={'100%'}
+        height={md ? 'auto' : '100%'}
+        mt={md ? 16 : 0}
         flexDirection={md ? 'column' : 'row'}
         justifyContent={'center'}
         alignItems={'center'}
@@ -49,8 +51,33 @@ export const Landing = () => {
                   ? 'linear-gradient(0deg, var(--mui-palette-background-default) 29.92%, rgba(255, 255, 255, 0.00) 100%)'
                   : 'linear-gradient(0deg, #FFF 29.92%, rgba(255, 255, 255, 0.00) 100%)',
               boxShadow: `0px 4px 4px 0px rgba(0, 0, 0, 0)`,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'flex-end',
             }}
-          />
+          >
+            <ArrowDownwardIcon
+              sx={{
+                fontSize: '2rem',
+                mb: 4,
+                animation: 'pulse 2s infinite ease-in-out',
+                '@keyframes pulse': {
+                  '0%': {
+                    transform: 'scale(1)',
+                    opacity: 0.7,
+                  },
+                  '50%': {
+                    transform: 'scale(1.2)',
+                    opacity: 1,
+                  },
+                  '100%': {
+                    transform: 'scale(1)',
+                    opacity: 0.7,
+                  },
+                },
+              }}
+            ></ArrowDownwardIcon>
+          </Box>
         )}
       </Stack>
       <Container maxWidth="lg" disableGutters sx={{ overflow: 'hidden' }}>
@@ -91,7 +118,9 @@ export const Landing = () => {
             textAlign={md ? 'center' : 'start'}
           >
             <FaqSection></FaqSection>
-            {md ? null : <img src="/faq.png" alt="robot" style={{ flex: 1 }} />}
+            {md ? null : (
+              <img src="/faq.webp" alt="robot" style={{ flex: 1 }} />
+            )}
           </Stack>
         </Stack>
       </Container>

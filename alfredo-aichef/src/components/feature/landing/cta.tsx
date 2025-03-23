@@ -1,13 +1,13 @@
 import { Button, Stack, Typography, useMediaQuery } from '@mui/material';
-import { GradientTitle } from '../common/gradient-title';
+import { GradientTitle } from '../../common/gradient-title';
 
 export const Cta = () => {
   const md = useMediaQuery('(max-width: 1235px)');
   return (
     <Stack
       flex={1}
-      height={'100%'}
-      width={md ? '100%' : 36}
+      height={md ? '60vh' : '100vh'}
+      width={'100%'}
       alignItems={'center'}
       justifyContent={'center'}
       sx={{

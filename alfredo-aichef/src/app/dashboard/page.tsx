@@ -1,4 +1,4 @@
-import { RecipeBuilderV2 } from '@/components/feature/recipe-builder-v2';
+import { RecipeBuilderV2 } from '@/components/feature/dashboard/recipe-builder-v2';
 import { Grid2 } from '@mui/material';
 
 export default async function Dashboard() {
