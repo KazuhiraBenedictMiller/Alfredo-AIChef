@@ -10,7 +10,7 @@ export const Cta = () => {
       alignItems={'center'}
       justifyContent={'center'}
       sx={{
-        transform: 'translateY(-10rem)',
+        transform: 'translateY(-5rem)',
       }}
       gap={2}
     >
