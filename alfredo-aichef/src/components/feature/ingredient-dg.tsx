@@ -1,6 +1,12 @@
 'use client';
 import { Box } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridActionsCellItem,
+  GridColDef,
+  GridRowId,
+} from '@mui/x-data-grid';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 export interface IngredientRow {
   id: number;
@@ -9,41 +15,52 @@ export interface IngredientRow {
   unit: string;
 }
 
-const columns: GridColDef<IngredientRow[][number]>[] = [
-  {
-    field: 'ingredient',
-    headerName: 'Ingredient',
-    flex: 1,
-  },
-  {
-    field: 'quantity',
-    headerName: 'Quantity',
-    flex: 1,
-    renderCell: (params) => {
-      return params.value + params.row.unit;
-    },
-  },
-];
-
-// const rows:  = [
-//   { id: 1, ingredient: 'Tomato', quantity: 20, unit: 'g' },
-//   { id: 2, ingredient: 'Onion', quantity: 10, unit: 'g' },
-//   { id: 3, ingredient: 'Garlic', quantity: 2, unit: 'pcs' },
-//   { id: 4, ingredient: 'Ginger', quantity: 100, unit: 'g' },
-//   { id: 5, ingredient: 'Chilli', quantity: 1, unit: 'kg' },
-//   { id: 6, ingredient: 'Coriander', quantity: 10, unit: 'g' },
-//   { id: 7, ingredient: 'Cumic', quantity: 1000, unit: 'ml' },
-//   { id: 8, ingredient: 'Turmeric', quantity: 1, unit: 'g' },
-//   { id: 9, ingredient: 'Basil', quantity: 10, unit: 'g' },
-// ];
-
 type Props = {
   rows: IngredientRow[];
+  setRows: (rows: IngredientRow[]) => void;
 };
 
-export const IngredientDg = ({ rows }: Props) => {
+export const IngredientDg = ({ rows, setRows }: Props) => {
+  const columns: GridColDef<IngredientRow[][number]>[] = [
+    {
+      field: 'ingredient',
+      headerName: 'Ingredient',
+      flex: 1,
+    },
+    {
+      field: 'quantity',
+      headerName: 'Quantity',
+      flex: 1,
+      renderCell: (params) => {
+        return params.value + params.row.unit;
+      },
+    },
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Actions',
+      width: 100,
+      cellClassName: 'actions',
+      getActions: ({ id }) => {
+        return [
+          <GridActionsCellItem
+            key={id}
+            icon={<DeleteOutlineIcon />}
+            label="Delete"
+            onClick={handleDeleteClick(id)}
+            color="inherit"
+          />,
+        ];
+      },
+    },
+  ];
+
+  const handleDeleteClick = (id: GridRowId) => () => {
+    setRows(rows.filter((row) => row.id !== id));
+  };
+
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
+    <Box sx={{ height: 400, width: '100%', mt: 2 }}>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -55,7 +72,6 @@ export const IngredientDg = ({ rows }: Props) => {
           },
         }}
         pageSizeOptions={[5]}
-        checkboxSelection
         disableRowSelectionOnClick
         disableColumnMenu
       />
