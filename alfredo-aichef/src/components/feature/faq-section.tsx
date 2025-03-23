@@ -13,7 +13,7 @@ export const FaqSection = () => {
     };
 
   return (
-    <Stack gap={1}>
+    <Stack gap={1} flex={1}>
       <Typography variant="h4" fontWeight={700} mb={2}>
         FAQ
       </Typography>

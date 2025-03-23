@@ -1,12 +1,15 @@
-import { Grid2 } from '@mui/material';
+'use client';
+
+import { Grid2, useMediaQuery } from '@mui/material';
 import { AboutCard } from '../common/about-card';
 
 export const AboutCardGrid = () => {
+  const md = useMediaQuery('(max-width: 1235px)');
   return (
     <Grid2
       container
       size={{ xs: 12, sm: 6, md: 4 }}
-      justifyContent={'space-between'}
+      justifyContent={md ? 'center' : 'space-between'}
     >
       <AboutCard
         title="Tell us what you're craving"
