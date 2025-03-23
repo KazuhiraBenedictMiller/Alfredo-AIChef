@@ -49,8 +49,16 @@ export const lightTheme = createTheme({
           borderRadius: '4rem',
         },
         outlined: {
-          color: '#020202',
+          '&.MuiButton-outlinedPrimary': {
+            border: '2px solid #50e3c2',
+            color: '#50e3c2',
+          },
         },
+      },
+    },
+    MuiTextField: {
+      defaultProps: {
+        size: 'small',
       },
     },
   },

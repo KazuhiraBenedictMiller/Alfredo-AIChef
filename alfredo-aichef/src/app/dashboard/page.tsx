@@ -1,10 +1,17 @@
-import { SignedIn } from '@clerk/nextjs';
-import { auth } from '@clerk/nextjs/server';
+import { RecipeBuilderV2 } from '@/components/feature/recipe-builder-v2';
+import { Grid2 } from '@mui/material';
 
-// @Marco, I created these routes for you, hopefully it will help.
-export default async function DashboardPage() {
-  const { userId, redirectToSignIn } = await auth();
-  if (!userId) return redirectToSignIn();
-
-  return <SignedIn>Hello, {userId}</SignedIn>;
+export default async function Dashboard() {
+  return (
+    <Grid2
+      container
+      height={'100%'}
+      justifyContent={'center'}
+      px={'64px'}
+      py={'96px'}
+      spacing={2}
+    >
+      <RecipeBuilderV2 />
+    </Grid2>
+  );
 }

@@ -28,7 +28,11 @@ export default function RootLayout({
       <html lang="en">
         <body
           className={inter.className}
-          style={{ display: 'flex', flexDirection: 'column' }}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            boxSizing: 'border-box',
+          }}
         >
           <AppRouterCacheProvider>
             <ThemeProvider>
