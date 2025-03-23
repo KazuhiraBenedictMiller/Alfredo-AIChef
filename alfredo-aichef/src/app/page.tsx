@@ -2,6 +2,7 @@ import { AboutCardGrid } from '@/components/feature/about-card-grid';
 import { Cta } from '@/components/feature/cta';
 import { Box, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
+import { FaqSection } from '@/components/feature/faq-section';
 
 export default async function LandingPage() {
   return (
@@ -42,10 +43,14 @@ export default async function LandingPage() {
           </Typography>
         </Stack>
         <Stack>
-          <Typography variant="h4" fontWeight={700}>
+          <Typography variant="h4" fontWeight={700} mb={2}>
             How does Alfredo work?
           </Typography>
           <AboutCardGrid></AboutCardGrid>
+        </Stack>
+        <Stack flexDirection={'row'} justifyContent={'space-between'} gap={2}>
+          <FaqSection></FaqSection>
+          <Image src="/faq.png" alt="robot" height={500} width={750} />
         </Stack>
       </Stack>
     </>

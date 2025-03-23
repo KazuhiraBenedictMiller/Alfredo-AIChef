@@ -11,7 +11,7 @@ type Props = {
 
 export const AboutCard = ({ title, subtitle, src }: Props) => {
   return (
-    <Stack p={1} height={168}>
+    <Stack height={168}>
       <Divider />
       <Stack
         flexDirection={'row'}

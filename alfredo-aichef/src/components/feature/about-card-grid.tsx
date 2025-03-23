@@ -6,7 +6,6 @@ export const AboutCardGrid = () => {
     <Grid2
       container
       size={{ xs: 12, sm: 6, md: 4 }}
-      gap={2}
       justifyContent={'space-between'}
     >
       <AboutCard

@@ -30,6 +30,11 @@ export const Header = () => {
       justifyContent={'space-between'}
       alignItems={'center'}
       boxShadow={'0px 4px 4px 2px rgba(0, 0, 0, 0.08)'}
+      position={'fixed'}
+      top={0}
+      width={'100%'}
+      zIndex={1000}
+      bgcolor={'background.paper'}
     >
       <Logo></Logo>
       <Stack flexDirection={'row'} alignItems={'center'}>
