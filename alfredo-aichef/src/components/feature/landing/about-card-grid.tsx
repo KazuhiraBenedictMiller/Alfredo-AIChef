@@ -33,7 +33,7 @@ export const AboutCardGrid = () => {
       ></AboutCard>
       <AboutCard
         title="Not what you were hoping for?"
-        subtitle="You can ask Alfredo for a different selection! He’s really good, but"
+        subtitle="You can ask Alfredo for a different selection! He’s always happy to help!"
         src="/5-about-card.png"
       ></AboutCard>
       <AboutCard
