@@ -4,9 +4,7 @@ import { MaterialUISwitch } from '../common/theme-button';
 import { Button, Stack } from '@mui/material';
 import { Logo } from './logo';
 import {
-  SignInButton,
   SignOutButton,
-  SignUpButton,
   useAuth,
 } from '@clerk/nextjs';
 
@@ -45,21 +43,16 @@ export const Header = () => {
         />
         {!isSignedIn ? (
           <Stack direction={'row'} gap={1}>
-            <SignInButton fallbackRedirectUrl="/dashboard">
-              <Button variant="outlined">Sign In</Button>
-            </SignInButton>
-            <SignUpButton fallbackRedirectUrl="/dashboard">
-              <Button variant="contained">Sign Up</Button>
-            </SignUpButton>
+            <Button href="/sign-in" variant="outlined">Sign In</Button>
+            <Button href="/sign-up" variant="contained">Sign Up</Button>
           </Stack>
         ) : (
-          <SignOutButton redirectUrl="/">
+          <SignOutButton>
             <Button variant="contained">Sign out</Button>
           </SignOutButton>
         )}
       </Stack>
 
-      {/* <UserButton showName /> */}
     </Stack>
   );
 };
