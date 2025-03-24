@@ -22,7 +22,7 @@ type AuthCheckResponse = {
   // Add other possible response properties here
 };
 
-const domain = '@sudents.opit.com, faculty.opit.com';
+const domain = '@sudents.opit.com, @faculty.opit.com, and @opit.com';
 
 export default function AuthCheck({ children }: AuthCheckProps) {
   const { signOut } = useClerk();
