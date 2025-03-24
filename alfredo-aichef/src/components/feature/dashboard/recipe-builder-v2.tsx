@@ -20,25 +20,8 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-
-const ingredients = [
-  { label: 'Tomato', value: 'tomato' },
-  { label: 'Onion', value: 'onion' },
-  { label: 'Garlic', value: 'garlic' },
-  { label: 'Ginger', value: 'ginger' },
-  { label: 'Chilli', value: 'chilli' },
-  { label: 'Coriander', value: 'coriander' },
-  { label: 'Cumin', value: 'cumin' },
-  { label: 'Turmeric', value: 'turmeric' },
-  { label: 'Basil', value: 'basil' },
-  { label: 'Oregano', value: 'oregano' },
-  { label: 'Parsley', value: 'parsley' },
-  { label: 'Thyme', value: 'thyme' },
-  { label: 'Rosemary', value: 'rosemary' },
-  { label: 'Mint', value: 'mint' },
-  { label: 'Sage', value: 'sage' },
-  { label: 'Dill', value: 'dill' },
-];
+import { RecipeLoader } from './recipe-loader';
+import { ingredients } from '@/constants/ingredients';
 
 interface RecipeIngredient {
   dish_name: string;
@@ -194,7 +177,9 @@ export const RecipeBuilderV2 = () => {
         </Stack>
       </Grid2>
       <Grid2 size={{ md: 12, lg: 6 }}>
-        {parsedRecipes && (
+        {isPending || !parsedRecipes ? (
+          <RecipeLoader />
+        ) : (
           <Stack gap={2} mt={3}>
             <Stack flexDirection={'row'} justifyContent={'space-between'}>
               <Typography variant="h5">Recipes</Typography>
@@ -215,7 +200,6 @@ export const RecipeBuilderV2 = () => {
                 <Typography variant="subtitle1">Ingredients:</Typography>
                 <ul>
                   {parsedRecipes[selectedRecipe].ingredients &&
-                  Array.isArray(parsedRecipes[selectedRecipe].ingredients) ? (
                     parsedRecipes[selectedRecipe].ingredients.map(
                       (ingredient, i) => (
                         <li key={i}>
@@ -224,14 +208,7 @@ export const RecipeBuilderV2 = () => {
                             : `${ingredient.quantity} of ${ingredient.ingredient}`}
                         </li>
                       )
-                    )
-                  ) : (
-                    <li>
-                      {JSON.stringify(
-                        parsedRecipes[selectedRecipe].ingredients
-                      )}
-                    </li> // Debugging fallback
-                  )}
+                    )}
                 </ul>
                 <Typography variant="subtitle1">Instructions:</Typography>
                 <Typography>
