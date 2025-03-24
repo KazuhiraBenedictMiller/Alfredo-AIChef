@@ -22,7 +22,9 @@ export const Cta = () => {
       <Typography variant={'h6'} textAlign={'center'}>
         Your Pantry, Our Chef: Instant Recipes from what you have!
       </Typography>
-      <Button href="/dashboard" variant="contained">Try it now</Button>
+      <Button href="/dashboard" variant="contained">
+        Try it now
+      </Button>
     </Stack>
   );
 };

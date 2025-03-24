@@ -1,7 +1,6 @@
 import { RecipeBuilderV2 } from '@/components/feature/dashboard/recipe-builder-v2';
 import { Grid2 } from '@mui/material';
-import AuthCheck from '@/components/common/AuthCheck';
-
+import AuthCheck from '@/components/common/auth-check';
 
 export default async function Dashboard() {
   // const user = await auth();

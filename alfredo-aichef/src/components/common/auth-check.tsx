@@ -10,7 +10,7 @@ import {
   DialogActions,
   Typography,
   Box,
-  CircularProgress
+  CircularProgress,
 } from '@mui/material';
 
 type AuthCheckProps = {
@@ -22,7 +22,7 @@ type AuthCheckResponse = {
   // Add other possible response properties here
 };
 
-const domain = '@sudents.opit.com, @faculty.opit.com, and @opit.com';
+const domain = '@students.opit.com, @faculty.opit.com, and @opit.com';
 
 export default function AuthCheck({ children }: AuthCheckProps) {
   const { signOut } = useClerk();
@@ -39,7 +39,7 @@ export default function AuthCheck({ children }: AuthCheckProps) {
   const { isLoading, error, data } = useQuery({
     queryKey: ['authCheck'],
     queryFn: checkAuthentication,
-    retry: false
+    retry: false,
   });
 
   // Handle error separately
@@ -62,8 +62,8 @@ export default function AuthCheck({ children }: AuthCheckProps) {
   const errorMessage = error
     ? (error as Error).message
     : userDeleted
-      ? `Your account has been deleted. Only Users with ${domain} email addresses are permitted.`
-      : null;
+    ? `Your account has been deleted. Only Users with ${domain} email addresses are permitted.`
+    : null;
 
   // Set timeout for user deleted case
   if (userDeleted && !timeoutRef.current) {
@@ -74,12 +74,7 @@ export default function AuthCheck({ children }: AuthCheckProps) {
 
   if (isLoading) {
     return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        py={4}
-      >
+      <Box display="flex" justifyContent="center" alignItems="center" py={4}>
         <CircularProgress color="primary" />
         <Typography variant="body1" sx={{ ml: 2 }}>
           Loading...
@@ -90,26 +85,14 @@ export default function AuthCheck({ children }: AuthCheckProps) {
 
   return (
     <>
-      <Dialog
-        open={errorMessage !== null}
-        maxWidth="sm"
-        fullWidth
-      >
+      <Dialog open={errorMessage !== null} maxWidth="sm" fullWidth>
         <DialogContent sx={{ textAlign: 'center', pt: 3 }}>
-          <Typography
-            variant="body1"
-            color="error"
-            gutterBottom
-          >
+          <Typography variant="body1" color="error" gutterBottom>
             {errorMessage}
           </Typography>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'center', pb: 3 }}>
-          <Button
-            href='/'
-            variant="contained"
-            color="primary"
-          >
+          <Button href="/" variant="contained" color="primary">
             Go to Home
           </Button>
         </DialogActions>
