@@ -21,7 +21,7 @@ export const QuantityTextField = ({
   setUnit,
 }: Props) => {
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(Number(e.target.value));
+    setAmount(Number(e.target.value) < 1 ? 1 : Number(e.target.value));
   };
 
   const handleUnitChange = (

@@ -7,13 +7,7 @@ import {
   GridRowId,
 } from '@mui/x-data-grid';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-
-export interface IngredientRow {
-  id: number;
-  ingredient: string;
-  quantity: number;
-  unit: string;
-}
+import { IngredientRow } from './interfaces/recipe-interface';
 
 type Props = {
   rows: IngredientRow[];

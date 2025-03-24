@@ -11,124 +11,27 @@ import {
 } from '@mui/material';
 import { IngredientSelect } from './ingredient-select';
 import { QuantityTextField } from './quantity-textfield';
-import { IngredientDg, IngredientRow } from './ingredient-dg';
+import { IngredientDg } from './ingredient-dg';
 import { GradientTitle } from '../../common/gradient-title';
 import AddIcon from '@mui/icons-material/Add';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import { useState, useEffect } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { RecipeLoader } from './recipe-loader';
 import { ingredients } from '@/constants/ingredients';
-
-interface RecipeIngredient {
-  dish_name: string;
-  ingredients: { ingredient: string; quantity: number; unit: string }[]; // Fixing type for structured ingredient objects
-  cooking_instructions: string;
-  prep_time: string;
-  cooking_time: string;
-}
-
-interface ApiResponse {
-  recipe: string; // JSON string containing an array of recipes
-}
-
-export type RecipePayload = Partial<IngredientRow>;
+import { useUser } from '@clerk/nextjs';
+import { useRecipeBuilder } from './hooks/use-recipe-builder';
 
 export const RecipeBuilderV2 = () => {
-  const [amount, setAmount] = useState<number>(0);
-  const [unit, setUnit] = useState<'g' | 'kg' | 'ml' | 'pcs'>('g');
-  const [rows, setRows] = useState<IngredientRow[]>([]);
-  const [selectedIngredient, setSelectedIngredient] = useState<string>('');
-  const [parsedRecipes, setParsedRecipes] = useState<RecipeIngredient[] | null>(
-    null
-  );
-  const [selectedRecipe, setSelectedRecipe] = useState<number>(0);
-
-  const { data, isPending, mutateAsync } = useMutation<
-    ApiResponse,
-    Error,
-    { ingredients: string }
-  >({
-    mutationFn: async ({ ingredients }) => {
-      try {
-        const { data } = await axios.post<ApiResponse>('/api/recipe', {
-          ingredients,
-        });
-        return data;
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          throw new Error(err.message);
-        }
-        throw new Error('An unknown error occurred');
-      }
-    },
-  });
-
-  // Handle parsing API response
-  useEffect(() => {
-    if (data?.recipe) {
-      try {
-        const recipes: RecipeIngredient[] = JSON.parse(data.recipe); // First parse to get JSON
-        setParsedRecipes(recipes);
-      } catch (error) {
-        console.error('Error parsing API response:', error);
-        setParsedRecipes(null);
-      }
-    }
-  }, [data]);
-
-  const handleGenerateClick = async () => {
-    const ingredientsPayload = rows.map(
-      (row): RecipePayload => ({
-        ingredient: row.ingredient,
-        quantity: row.quantity,
-        unit: row.unit,
-      })
-    );
-    await mutateAsync({ ingredients: JSON.stringify(ingredientsPayload) });
-  };
-
-  const handlePrev = () => {
-    setSelectedRecipe((prev) => prev - 1);
-  };
-
-  const handleNext = () => {
-    setSelectedRecipe((prev) => prev + 1);
-  };
-
-  const handleAddRow = () => {
-    setRows([
-      ...rows,
-      {
-        id: rows.length + 1,
-        ingredient: selectedIngredient,
-        quantity: amount,
-        unit,
-      },
-    ]);
-    setSelectedIngredient('');
-    setAmount(0);
-  };
-
-  const handleReset = () => {
-    setRows([]);
-    setSelectedIngredient('');
-    setAmount(0);
-    setParsedRecipes(null);
-  };
-
-  const addDisabled = selectedIngredient === '' || amount === 0;
-  const prevDisabled = selectedRecipe === 0;
-  const nextDisabled =
-    !parsedRecipes || selectedRecipe === parsedRecipes.length - 1;
+  const { user } = useUser();
+  const { get, set, handle, is, reset } = useRecipeBuilder();
 
   return (
     <>
       <Grid2 size={{ md: 12, lg: 6 }}>
-        <GradientTitle title="Hi there, user! What are you going to cook today?" />
+        <GradientTitle
+          title={`Hi there, ${user?.fullName}! What are you going to cook today?`}
+        />
         <Stack
           flexDirection={'row'}
           gap={1}
@@ -138,56 +41,56 @@ export const RecipeBuilderV2 = () => {
         >
           <IngredientSelect
             options={ingredients}
-            selected={selectedIngredient}
-            setSelected={setSelectedIngredient}
+            selected={get.selectedIngredient}
+            setSelected={set.selectedIngredient}
           />
           <QuantityTextField
-            amount={amount}
-            setAmount={setAmount}
-            unit={unit}
-            setUnit={setUnit}
+            amount={get.amount}
+            setAmount={set.amount}
+            unit={get.unit}
+            setUnit={set.unit}
           />
           <Button
             variant="contained"
             startIcon={<AddIcon />}
-            onClick={handleAddRow}
-            disabled={addDisabled}
+            onClick={handle.addRow}
+            disabled={is.addDisabled}
           >
             Add
           </Button>
         </Stack>
-        <IngredientDg rows={rows} setRows={setRows}></IngredientDg>
+        <IngredientDg rows={get.rows} setRows={set.rows}></IngredientDg>
         <Stack
           flexDirection={'row'}
           gap={1}
           mt={2}
           justifyContent={'space-between'}
         >
-          <Button onClick={handleReset} variant="outlined" color="error">
+          <Button onClick={reset} variant="outlined" color="error">
             Reset
           </Button>
           <Button
             variant="contained"
             startIcon={<AutoAwesomeIcon />}
-            onClick={handleGenerateClick}
-            disabled={isPending}
+            onClick={handle.generateClick}
+            disabled={is.dataPending || get.rows.length === 0}
           >
-            {isPending ? 'Loading...' : 'Generate'}
+            {is.dataPending ? 'Loading...' : 'Generate'}
           </Button>
         </Stack>
       </Grid2>
       <Grid2 size={{ md: 12, lg: 6 }}>
-        {isPending || !parsedRecipes ? (
+        {is.dataPending ? (
           <RecipeLoader />
-        ) : (
+        ) : get.data ? (
           <Stack gap={2} mt={3}>
             <Stack flexDirection={'row'} justifyContent={'space-between'}>
               <Typography variant="h5">Recipes</Typography>
               <Stack flexDirection={'row'}>
-                <IconButton onClick={handlePrev} disabled={prevDisabled}>
+                <IconButton onClick={handle.prev} disabled={is.prevDisabled}>
                   <ArrowBackIosNewIcon></ArrowBackIosNewIcon>
                 </IconButton>
-                <IconButton onClick={handleNext} disabled={nextDisabled}>
+                <IconButton onClick={handle.next} disabled={is.nextDisabled}>
                   <ArrowForwardIosIcon></ArrowForwardIosIcon>
                 </IconButton>
               </Stack>
@@ -195,12 +98,12 @@ export const RecipeBuilderV2 = () => {
             <Card sx={{ border: '1px solid #ccc', borderRadius: '8px' }}>
               <CardContent>
                 <Typography variant="h6">
-                  {parsedRecipes[selectedRecipe].dish_name}
+                  {get.data[get.selectedRecipe].dish_name}
                 </Typography>
                 <Typography variant="subtitle1">Ingredients:</Typography>
                 <ul>
-                  {parsedRecipes[selectedRecipe].ingredients &&
-                    parsedRecipes[selectedRecipe].ingredients.map(
+                  {get.data[get.selectedRecipe].ingredients &&
+                    get.data[get.selectedRecipe].ingredients.map(
                       (ingredient, i) => (
                         <li key={i}>
                           {typeof ingredient === 'string'
@@ -212,18 +115,18 @@ export const RecipeBuilderV2 = () => {
                 </ul>
                 <Typography variant="subtitle1">Instructions:</Typography>
                 <Typography>
-                  {parsedRecipes[selectedRecipe].cooking_instructions}
+                  {get.data[get.selectedRecipe].cooking_instructions}
                 </Typography>
                 <Typography>
-                  Prep Time: {parsedRecipes[selectedRecipe].prep_time}
+                  Prep Time: {get.data[get.selectedRecipe].prep_time}
                 </Typography>
                 <Typography>
-                  Cooking Time: {parsedRecipes[selectedRecipe].cooking_time}
+                  Cooking Time: {get.data[get.selectedRecipe].cooking_time}
                 </Typography>
               </CardContent>
             </Card>
           </Stack>
-        )}
+        ) : null}
       </Grid2>
     </>
   );
