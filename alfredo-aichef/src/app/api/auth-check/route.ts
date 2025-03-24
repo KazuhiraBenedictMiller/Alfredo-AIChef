@@ -21,7 +21,11 @@ export async function GET() {
 
     const domain = email.split("@")[1];
 
-    if (domain !== "students.opit.com" && domain !== "faculty.opit.com") {
+    if (
+      domain !== "students.opit.com" &&
+      domain !== "faculty.opit.com" &&
+      domain !== "opit.com"
+    ) {
       try {
         const clerk = await clerkClient();
         // Delete user if email domain is not valid
