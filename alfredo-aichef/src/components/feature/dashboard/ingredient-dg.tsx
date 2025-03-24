@@ -60,7 +60,7 @@ export const IngredientDg = ({ rows, setRows }: Props) => {
   };
 
   return (
-    <Box sx={{ height: 400, width: '100%', mt: 2 }}>
+    <Box sx={{ height: 400, width: '100%', minWidth: 200, mt: 2 }}>
       <DataGrid
         rows={rows}
         columns={columns}
