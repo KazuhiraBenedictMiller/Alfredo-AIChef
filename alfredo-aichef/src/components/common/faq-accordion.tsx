@@ -37,7 +37,9 @@ export const FaqAccordion = ({
           {title}
         </Typography>
       </AccordionSummary>
-      <AccordionDetails>{subtitle}</AccordionDetails>
+      <AccordionDetails sx={{ textAlign: 'start' }}>
+        {subtitle}
+      </AccordionDetails>
     </Accordion>
   );
 };
