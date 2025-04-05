@@ -1,6 +1,16 @@
 /AIApp/AlfredoAIAPI.pem
+<<<<<<< HEAD
 /AIApp/aiappout.json
 /AIApp/Makefile
 /AIApp/Sketches.excalidraw
 /AIApp/DevLazyCurl.sh
 /AIApp/LazyCurl.sh
+=======
+alfredo-aichef/.idea/alfredo-aichef.iml
+alfredo-aichef/.idea/modules.xml
+alfredo-aichef/.idea/vcs.xml
+alfredo-aichef/.idea/inspectionProfiles/Project_Default.xml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/inspectionProfiles/Project_Default.xml
+>>>>>>> main

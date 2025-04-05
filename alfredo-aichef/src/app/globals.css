@@ -1,0 +1,15 @@
+h1 {
+  font-size: clamp(32px, calc(2rem + ((1vw - 3.2px) * 2)), 64px) !important;
+}
+
+h4 {
+  font-size: clamp(24px, calc(1.5rem + ((1vw - 3.2px) * 1.5)), 48px) !important;
+}
+
+h6 {
+  font-size: clamp(16px, calc(1rem + ((1vw - 3.2px) * 0.5)), 24px) !important;
+}
+
+.cl-headerTitle {
+  font-size: clamp(24px, calc(1.5rem + ((1vw - 3.2px) * 1.5)), 48px) !important;
+}
