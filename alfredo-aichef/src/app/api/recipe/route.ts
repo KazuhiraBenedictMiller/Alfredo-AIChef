@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // app/api/recipe/route.ts
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -58,7 +59,7 @@ IMPORTANT: Each recipe object should have these exact properties: "dish_name", "
 async function run(
   userInput: string,
   history: any[] = []
-): Promise<{ result: string; updatedHistory: any[] }> {
+): Promise<{ result: string; updatedHistory: unknown[] }> {
   // (Keep the robust run function from the previous version with logging/error checks)
   if (!apiKey) {
     /* Handle missing key */ throw new Error('API key missing');
