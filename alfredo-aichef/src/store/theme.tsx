@@ -15,11 +15,11 @@ type Props = {
 };
 
 export const ThemeProvider = ({ children }: Props) => {
-  const [themeMode, setThemeMode] = useState(null);
+  const [themeMode, setThemeMode] = useState<string>('dark');
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setThemeMode(themeMode);
+      setThemeMode(localStorage.getItem('theme') || 'dark');
     }
   }, [localStorage]);
 
