@@ -15,12 +15,10 @@ type Props = {
 };
 
 export const ThemeProvider = ({ children }: Props) => {
-  const [themeMode, setThemeMode] = useState(
-    localStorage.getItem('theme') || 'light'
-  );
+  const [themeMode, setThemeMode] = useState(null);
 
   useEffect(() => {
-    if (localStorage) {
+    if (typeof window !== 'undefined') {
       setThemeMode(themeMode);
     }
   }, [localStorage]);
