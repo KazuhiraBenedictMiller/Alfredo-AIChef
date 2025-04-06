@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useState, useContext, useMemo } from 'react';
+import { createContext, useState, useContext, useMemo, useEffect } from 'react';
 
 const ThemeContext = createContext<{
   mode: string;
@@ -18,6 +18,12 @@ export const ThemeProvider = ({ children }: Props) => {
   const [themeMode, setThemeMode] = useState(
     localStorage.getItem('theme') || 'light'
   );
+
+  useEffect(() => {
+    if (localStorage) {
+      setThemeMode(themeMode);
+    }
+  }, [localStorage]);
 
   const contextValue = useMemo(
     () => ({ mode: themeMode, set: setThemeMode }),
