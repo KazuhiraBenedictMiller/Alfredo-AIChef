@@ -45,13 +45,13 @@ And These Considerations and Analysis:
 
 {ANALYSIS}
 
-I want you to Give Names to **3 distinct Recipes** and Provide the Step by Step Guidance on how to prepare **each of them**, given That: 
+I want you to Give Names to 3 distinct Recipes and Provide the Step by Step Guidance on how to prepare each of them, given That:
 
- 
 The returned recipe should be a flavorful dish that leverages the best pairings and preparation techniques based on the available ingredients.
-Longer returns are better, as they provide more detail and guidance for the user.
-The proper returned output should be as follows:
-JSON object WIHOUT Markdown (No ** characters) "dish_name ", "ingredients",  "cooking_instructions", "prep_time", "cooking_time"`;
+IMPORTANT: Longer returns are better, as they provide more detail and guidance for the user.
+IMPORTANT: Your response MUST be a valid JSON array with 3 recipe objects. 
+IMPORTANT: DO NOT use any Markdown formatting in your response. No asterisks (**) for bold text.
+IMPORTANT: Each recipe object should have these exact properties: "dish_name", "ingredients", "cooking_instructions", "prep_time", "cooking_time"`;
 
 // run function remains the same
 async function run(
@@ -100,6 +100,12 @@ async function run(
     console.error("[API RUN] Error during Gemini API call:", error);
     throw error;
   }
+}
+
+// Add this function to remove any Markdown formatting
+function removeMarkdown(text: string): string {
+  // Remove bold markdown (**text**)
+  return text.replace(/\*\*(.*?)\*\*/g, "$1");
 }
 
 // POST handler remains the same structure, just uses the modified final prompt template
@@ -151,7 +157,12 @@ export async function POST(request: Request) {
     let finalRecipeJsonString: string;
     try {
       const recipeResult = await run(finalPrompt, chatHistory);
-      finalRecipeJsonString = recipeResult.result;
+      let resultText = recipeResult.result;
+
+      // Clean up any remaining markdown in the response
+      resultText = removeMarkdown(resultText);
+      finalRecipeJsonString = resultText;
+
       console.log("[POST HANDLER] Final recipe string received.");
       // Optional basic validation
       const trimmedResult = finalRecipeJsonString?.trim() ?? "";
