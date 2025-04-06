@@ -13,6 +13,7 @@ export const useRecipeBuilder = () => {
   const [unit, setUnit] = useState<'g' | 'kg' | 'ml' | 'pcs'>('g');
   const [rows, setRows] = useState<IngredientRow[]>([]);
   const [selectedIngredient, setSelectedIngredient] = useState<string>('');
+  const [selectedMeal, setSelectedMeal] = useState<string>('');
   const [selectedRecipe, setSelectedRecipe] = useState<number>(0);
 
   const { data, isPending, mutateAsync } = useMutation<
@@ -69,6 +70,7 @@ export const useRecipeBuilder = () => {
       selectedIngredient,
       rows,
       selectedRecipe,
+      selectedMeal,
     },
     set: {
       amount: setAmount,
@@ -76,6 +78,7 @@ export const useRecipeBuilder = () => {
       selectedIngredient: setSelectedIngredient,
       rows: setRows,
       selectedRecipe: setSelectedRecipe,
+      selectedMeal: setSelectedMeal,
     },
     handle: {
       addRow: handleAddRow,

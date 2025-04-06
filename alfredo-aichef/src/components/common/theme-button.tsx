@@ -12,6 +12,7 @@ export const ThemeButton = () => {
     checked: boolean
   ) => {
     theme.set(checked ? 'dark' : 'light');
+    localStorage.setItem('theme', checked ? 'dark' : 'light');
   };
 
   return (

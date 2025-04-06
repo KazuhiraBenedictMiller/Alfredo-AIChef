@@ -22,6 +22,7 @@ import { ingredients } from '@/constants/ingredients';
 import { useUser } from '@clerk/nextjs';
 import { useRecipeBuilder } from './hooks/use-recipe-builder';
 import { PrintRecipe } from './print-recipe';
+import { MealSelect } from './meal-select';
 
 export const RecipeBuilderV2 = () => {
   const { user } = useUser();
@@ -35,31 +36,43 @@ export const RecipeBuilderV2 = () => {
         />
         <Stack
           flexDirection={'row'}
-          gap={1}
-          justifyContent={'flex-start'}
+          justifyContent={'space-between'}
+          // alignItems={'center'}
           mt={2}
-          flexWrap={'wrap'}
+          gap={1}
         >
-          <IngredientSelect
-            options={ingredients}
-            selected={get.selectedIngredient}
-            setSelected={set.selectedIngredient}
-          />
-          <QuantityTextField
-            amount={get.amount}
-            setAmount={set.amount}
-            unit={get.unit}
-            setUnit={set.unit}
-          />
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={handle.addRow}
-            disabled={is.addDisabled}
+          <Stack
+            flexDirection={'row'}
+            gap={1}
+            justifyContent={'flex-start'}
+            flexWrap={'wrap'}
           >
-            Add
-          </Button>
+            <IngredientSelect
+              options={ingredients}
+              selected={get.selectedIngredient}
+              setSelected={set.selectedIngredient}
+            />
+            <QuantityTextField
+              amount={get.amount}
+              setAmount={set.amount}
+              unit={get.unit}
+              setUnit={set.unit}
+            />
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              onClick={handle.addRow}
+              disabled={is.addDisabled}
+            >
+              Add
+            </Button>
+          </Stack>
+          <MealSelect
+            selected={get.selectedMeal}
+            setSelected={set.selectedMeal}
+          />
         </Stack>
+
         <IngredientDg rows={get.rows} setRows={set.rows}></IngredientDg>
         <Stack
           flexDirection={'row'}
@@ -92,17 +105,24 @@ export const RecipeBuilderV2 = () => {
                   <ArrowBackIosNewIcon></ArrowBackIosNewIcon>
                 </IconButton>
                 <IconButton onClick={handle.next} disabled={is.nextDisabled}>
-                  <ArrowForwardIosIcon></ArrowForwardIosIcon>
+                  <ArrowForwardIosIcon stroke="4px"></ArrowForwardIosIcon>
                 </IconButton>
               </Stack>
             </Stack>
             <Card sx={{ border: '1px solid #ccc', borderRadius: '8px' }}>
               <CardContent>
-                <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="flex-start"
+                >
                   <Typography variant="h6">
                     {get.data[get.selectedRecipe].dish_name}
                   </Typography>
-                  <PrintRecipe recipe={get.data[get.selectedRecipe]} buttonVariant="outlined" />
+                  <PrintRecipe
+                    recipe={get.data[get.selectedRecipe]}
+                    buttonVariant="outlined"
+                  />
                 </Stack>
                 <Typography variant="subtitle1">Ingredients:</Typography>
                 <ul>

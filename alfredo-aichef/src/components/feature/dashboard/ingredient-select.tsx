@@ -12,7 +12,7 @@ export const IngredientSelect = ({ options, selected, setSelected }: Props) => {
     <Autocomplete
       id="ingredients-select"
       sx={{ width: 300 }}
-      options={options}
+      options={options.sort((a, b) => a.label.localeCompare(b.label))}
       autoHighlight
       getOptionLabel={(option) => option.label}
       inputValue={selected}

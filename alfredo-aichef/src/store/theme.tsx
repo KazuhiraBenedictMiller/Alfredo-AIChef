@@ -6,7 +6,7 @@ const ThemeContext = createContext<{
   mode: string;
   set: React.Dispatch<React.SetStateAction<string>>;
 }>({
-  mode: 'light',
+  mode: 'dark',
   set: () => {},
 });
 
@@ -15,9 +15,10 @@ type Props = {
 };
 
 export const ThemeProvider = ({ children }: Props) => {
-  const [themeMode, setThemeMode] = useState('light');
+  const [themeMode, setThemeMode] = useState(
+    localStorage.getItem('theme') || 'light'
+  );
 
-  // IMPORTANT: Recompute the context value when themeMode changes.
   const contextValue = useMemo(
     () => ({ mode: themeMode, set: setThemeMode }),
     [themeMode]
