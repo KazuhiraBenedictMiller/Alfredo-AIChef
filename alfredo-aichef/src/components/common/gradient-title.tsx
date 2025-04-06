@@ -7,11 +7,11 @@ type Props = {
   title: string;
 } & TypographyProps;
 
-export const GradientTitle = ({ title, textAlign }: Props) => {
+export const GradientTitle = ({ title, textAlign, variant }: Props) => {
   const theme = useThemeContext();
   return (
     <Typography
-      variant={'h1'}
+      variant={variant || 'h1'}
       fontWeight={700}
       sx={{
         background:

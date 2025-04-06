@@ -10,22 +10,28 @@ interface PrintRecipeProps {
 
 export const PrintRecipe: React.FC<PrintRecipeProps> = ({
   recipe,
-  buttonVariant = 'contained'
+  buttonVariant = 'contained',
 }) => {
   const handlePrint = () => {
     const printWindow = window.open('', '_blank');
     if (!printWindow) {
-      alert('Unable to open the print window. Please check your browser settings or disable popup blockers.');
+      alert(
+        'Unable to open the print window. Please check your browser settings or disable popup blockers.'
+      );
       return;
     }
 
     // Format ingredients correctly based on your data structure
-    const ingredientsList = recipe.ingredients.map(ingredient => {
-      if (typeof ingredient === 'string') {
-        return `<li>${ingredient}</li>`;
-      }
-      return `<li>${ingredient.quantity || ''} ${ingredient.unit || ''} ${ingredient.ingredient}</li>`;
-    }).join('');
+    const ingredientsList = recipe.ingredients
+      .map((ingredient) => {
+        if (typeof ingredient === 'string') {
+          return `<li>${ingredient}</li>`;
+        }
+        return `<li>${ingredient.quantity || ''} ${ingredient.unit || ''} ${
+          ingredient.ingredient
+        }</li>`;
+      })
+      .join('');
 
     const printContent = `
       <!DOCTYPE html>
@@ -108,7 +114,7 @@ export const PrintRecipe: React.FC<PrintRecipeProps> = ({
       onClick={handlePrint}
       aria-label="Print recipe"
     >
-      Print Recipe
+      Print
     </Button>
   );
 };

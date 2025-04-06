@@ -1,15 +1,13 @@
 'use client';
 import { useThemeContext } from '@/store/theme';
 import { MaterialUISwitch } from '../common/theme-button';
-import { Button, Stack } from '@mui/material';
+import { Button, Stack, useMediaQuery } from '@mui/material';
 import { Logo } from './logo';
-import {
-  SignOutButton,
-  useAuth,
-} from '@clerk/nextjs';
+import { SignOutButton, useAuth } from '@clerk/nextjs';
 
 export const Header = () => {
   const theme = useThemeContext();
+  const isTablet = useMediaQuery('(min-width: 600px)');
   const { isSignedIn } = useAuth();
 
   const toggleTheme = (
@@ -17,6 +15,7 @@ export const Header = () => {
     checked: boolean
   ) => {
     theme.set(checked ? 'dark' : 'light');
+    localStorage.setItem('theme', checked ? 'dark' : 'light');
   };
 
   return (
@@ -41,18 +40,23 @@ export const Header = () => {
           checked={theme.mode === 'dark'}
           onChange={toggleTheme}
         />
-        {!isSignedIn ? (
-          <Stack direction={'row'} gap={1}>
-            <Button href="/sign-in" variant="outlined">Sign In</Button>
-            <Button href="/sign-up" variant="contained">Sign Up</Button>
-          </Stack>
-        ) : (
-          <SignOutButton>
-            <Button variant="contained">Sign out</Button>
-          </SignOutButton>
-        )}
+        {isTablet ? (
+          !isSignedIn ? (
+            <Stack direction={'row'} gap={1}>
+              <Button href="/sign-in" variant="outlined">
+                Sign In
+              </Button>
+              <Button href="/sign-up" variant="contained">
+                Sign Up
+              </Button>
+            </Stack>
+          ) : (
+            <SignOutButton>
+              <Button variant="contained">Sign out</Button>
+            </SignOutButton>
+          )
+        ) : null}
       </Stack>
-
     </Stack>
   );
 };

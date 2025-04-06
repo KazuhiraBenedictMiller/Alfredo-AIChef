@@ -32,6 +32,7 @@ export const RecipeBuilderV2 = () => {
     <>
       <Grid2 size={{ md: 12, lg: 6 }}>
         <GradientTitle
+          variant="h4"
           title={`Hi there, ${user?.fullName}! What are you going to cook today?`}
         />
         <Stack
@@ -67,10 +68,6 @@ export const RecipeBuilderV2 = () => {
               Add
             </Button>
           </Stack>
-          <MealSelect
-            selected={get.selectedMeal}
-            setSelected={set.selectedMeal}
-          />
         </Stack>
 
         <IngredientDg rows={get.rows} setRows={set.rows}></IngredientDg>
@@ -80,17 +77,33 @@ export const RecipeBuilderV2 = () => {
           mt={2}
           justifyContent={'space-between'}
         >
-          <Button onClick={reset} variant="outlined" color="error">
+          <Button
+            onClick={reset}
+            variant="outlined"
+            color="error"
+            sx={{ maxHeight: 40 }}
+          >
             Reset
           </Button>
-          <Button
-            variant="contained"
-            startIcon={<AutoAwesomeIcon />}
-            onClick={handle.generateClick}
-            disabled={is.dataPending || get.rows.length === 0}
+          <Stack
+            flexDirection={'row'}
+            gap={1}
+            justifyContent={'flex-end'}
+            flexWrap={'wrap'}
           >
-            {is.dataPending ? 'Loading...' : 'Generate'}
-          </Button>
+            <MealSelect
+              selected={get.selectedMeal}
+              setSelected={set.selectedMeal}
+            />
+            <Button
+              variant="contained"
+              startIcon={<AutoAwesomeIcon />}
+              onClick={handle.generateClick}
+              disabled={is.dataPending || get.rows.length === 0}
+            >
+              {is.dataPending ? 'Loading...' : 'Generate'}
+            </Button>
+          </Stack>
         </Stack>
       </Grid2>
       <Grid2 size={{ md: 12, lg: 6 }}>

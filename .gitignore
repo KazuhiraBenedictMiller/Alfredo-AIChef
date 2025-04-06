@@ -6,3 +6,5 @@ alfredo-aichef/.idea/inspectionProfiles/Project_Default.xml
 .idea/vcs.xml
 .idea/workspace.xml
 .idea/inspectionProfiles/Project_Default.xml
+/node_modules
+./node_modules
