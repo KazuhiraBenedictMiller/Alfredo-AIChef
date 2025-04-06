@@ -14,7 +14,10 @@ export const PrintRecipe: React.FC<PrintRecipeProps> = ({
 }) => {
   const handlePrint = () => {
     const printWindow = window.open('', '_blank');
-    if (!printWindow) return;
+    if (!printWindow) {
+      alert('Unable to open the print window. Please check your browser settings or disable popup blockers.');
+      return;
+    }
 
     // Format ingredients correctly based on your data structure
     const ingredientsList = recipe.ingredients.map(ingredient => {
