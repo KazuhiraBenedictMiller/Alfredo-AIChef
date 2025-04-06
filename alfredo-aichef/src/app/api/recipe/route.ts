@@ -5,8 +5,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const apiKey = process.env.GEMINI_API_KEY;
 
 if (!apiKey) {
-    console.error("[API KEY ERROR] API key is not configured.");
-    throw new Error("API key is not configured.");
+  console.error("[API KEY ERROR] API key is not configured.");
+  throw new Error("API key is not configured.");
 }
 
 const genAI = new GoogleGenerativeAI(apiKey);
@@ -53,81 +53,142 @@ Longer returns are better, as they provide more detail and guidance for the user
 The proper returned output should be as follows:
 JSON object WIHOUT Markdown (No ** characters) "dish_name ", "ingredients",  "cooking_instructions", "prep_time", "cooking_time"`;
 
-
 // run function remains the same
-async function run(userInput: string, history: any[] = []): Promise<{ result: string; updatedHistory: any[] }> {
-   // (Keep the robust run function from the previous version with logging/error checks)
-    if (!apiKey) { /* Handle missing key */ throw new Error("API key missing"); }
-    const chatSession = model.startChat({ generationConfig, history });
-    console.log("[API RUN] Sending prompt:", userInput);
-    console.log("[API RUN] History length:", history.length);
-    try {
-        const result = await chatSession.sendMessage(userInput);
-        const response = result?.response;
-        const responseText = response?.text() ?? "";
-        if (!response) throw new Error("Invalid response object received from model.");
-        if (response.promptFeedback?.blockReason) throw new Error(`Prompt blocked due to ${response.promptFeedback.blockReason}`);
-        if (response.candidates?.[0]?.finishReason === 'SAFETY') throw new Error("Response blocked due to safety settings.");
-        if (response.candidates?.[0]?.finishReason !== 'STOP' && response.candidates?.[0]?.finishReason !== 'MAX_TOKENS') {
-            console.warn("[API RUN] Model finished for reason:", response.candidates?.[0]?.finishReason);
-        }
-        console.log("[API RUN] Received response text length:", responseText.length);
-        const updatedHistory = [
-            ...history,
-            { role: 'user', parts: [{ text: userInput }] },
-            { role: 'model', parts: [{ text: responseText }] },
-        ];
-        return { result: responseText, updatedHistory: updatedHistory };
-    } catch (error: any) {
-        console.error("[API RUN] Error during Gemini API call:", error);
-        throw error;
+async function run(
+  userInput: string,
+  history: any[] = []
+): Promise<{ result: string; updatedHistory: any[] }> {
+  // (Keep the robust run function from the previous version with logging/error checks)
+  if (!apiKey) {
+    /* Handle missing key */ throw new Error("API key missing");
+  }
+  const chatSession = model.startChat({ generationConfig, history });
+  console.log("[API RUN] Sending prompt:", userInput);
+  console.log("[API RUN] History length:", history.length);
+  try {
+    const result = await chatSession.sendMessage(userInput);
+    const response = result?.response;
+    const responseText = response?.text() ?? "";
+    if (!response)
+      throw new Error("Invalid response object received from model.");
+    if (response.promptFeedback?.blockReason)
+      throw new Error(
+        `Prompt blocked due to ${response.promptFeedback.blockReason}`
+      );
+    if (response.candidates?.[0]?.finishReason === "SAFETY")
+      throw new Error("Response blocked due to safety settings.");
+    if (
+      response.candidates?.[0]?.finishReason !== "STOP" &&
+      response.candidates?.[0]?.finishReason !== "MAX_TOKENS"
+    ) {
+      console.warn(
+        "[API RUN] Model finished for reason:",
+        response.candidates?.[0]?.finishReason
+      );
     }
+    console.log(
+      "[API RUN] Received response text length:",
+      responseText.length
+    );
+    const updatedHistory = [
+      ...history,
+      { role: "user", parts: [{ text: userInput }] },
+      { role: "model", parts: [{ text: responseText }] },
+    ];
+    return { result: responseText, updatedHistory: updatedHistory };
+  } catch (error: any) {
+    console.error("[API RUN] Error during Gemini API call:", error);
+    throw error;
+  }
 }
 
 // POST handler remains the same structure, just uses the modified final prompt template
 export async function POST(request: Request) {
-   if (!apiKey) { /* Handle missing key */ return NextResponse.json({ error: "API key not configured." }, { status: 500 }); }
-   try {
-       const { ingredients } = await request.json();
-       if (!ingredients || typeof ingredients !== "string" || ingredients.trim() === "") {
-           return NextResponse.json({ error: "Ingredients are required and must be a non-empty string" }, { status: 400 });
-       }
-       let chatHistory: any[] = [];
-       // *** FIRST LLM CALL ***
-       const initialPrompt = initialUserPromptTemplate.replace("{INGREDIENTS}", ingredients);
-       let analysisResultText: string;
-       try {
-           const analysisResult = await run(initialPrompt, chatHistory);
-           analysisResultText = analysisResult.result;
-           chatHistory = analysisResult.updatedHistory;
-           console.log("[POST HANDLER] Analysis result received.");
-       } catch(error: any) {
-           console.error("[POST HANDLER] Error during analysis call:", error);
-           return NextResponse.json({ error: "Failed during ingredient analysis phase.", details: error.message }, { status: 500 });
-       }
-       // *** SECOND LLM CALL (uses MODIFIED finalUserPromptTemplate) ***
-       const finalPrompt = finalUserPromptTemplate // Use the modified template here
-         .replace("{INGREDIENTS}", ingredients)
-         .replace("{ANALYSIS}", analysisResultText);
-       let finalRecipeJsonString: string;
-        try {
-           const recipeResult = await run(finalPrompt, chatHistory);
-           finalRecipeJsonString = recipeResult.result;
-           console.log("[POST HANDLER] Final recipe string received.");
-           // Optional basic validation
-            const trimmedResult = finalRecipeJsonString?.trim() ?? "";
-            if (!(trimmedResult.startsWith('[') && trimmedResult.endsWith(']')) && !(trimmedResult.startsWith('{') && trimmedResult.endsWith('}'))) {
-                 console.warn("[POST HANDLER] Final recipe output doesn't look like a JSON array/object:", finalRecipeJsonString);
-            }
-        } catch (error: any) {
-            console.error("[POST HANDLER] Error during recipe generation call:", error);
-            return NextResponse.json({ error: "Failed during recipe generation phase.", details: error.message }, { status: 500 });
-        }
-       // *** RETURN USING THE TARGET STRUCTURE ***
-       return NextResponse.json({ recipe: finalRecipeJsonString });
-   } catch (error: any) {
-       console.error("[POST HANDLER] Top-level error:", error);
-       const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
-       return NextResponse.json({ error: "An unexpected error occurred processing your request.", details: errorMessage }, { status: 500 });
-   }
+  if (!apiKey) {
+    /* Handle missing key */ return NextResponse.json(
+      { error: "API key not configured." },
+      { status: 500 }
+    );
+  }
+  try {
+    const { ingredients } = await request.json();
+    if (
+      !ingredients ||
+      typeof ingredients !== "string" ||
+      ingredients.trim() === ""
+    ) {
+      return NextResponse.json(
+        { error: "Ingredients are required and must be a non-empty string" },
+        { status: 400 }
+      );
+    }
+    let chatHistory: any[] = [];
+    // *** FIRST LLM CALL ***
+    const initialPrompt = initialUserPromptTemplate.replace(
+      "{INGREDIENTS}",
+      ingredients
+    );
+    let analysisResultText: string;
+    try {
+      const analysisResult = await run(initialPrompt, chatHistory);
+      analysisResultText = analysisResult.result;
+      chatHistory = analysisResult.updatedHistory;
+      console.log("[POST HANDLER] Analysis result received.");
+    } catch (error: any) {
+      console.error("[POST HANDLER] Error during analysis call:", error);
+      return NextResponse.json(
+        {
+          error: "Failed during ingredient analysis phase.",
+          details: error.message,
+        },
+        { status: 500 }
+      );
+    }
+    // *** SECOND LLM CALL (uses MODIFIED finalUserPromptTemplate) ***
+    const finalPrompt = finalUserPromptTemplate // Use the modified template here
+      .replace("{INGREDIENTS}", ingredients)
+      .replace("{ANALYSIS}", analysisResultText);
+    let finalRecipeJsonString: string;
+    try {
+      const recipeResult = await run(finalPrompt, chatHistory);
+      finalRecipeJsonString = recipeResult.result;
+      console.log("[POST HANDLER] Final recipe string received.");
+      // Optional basic validation
+      const trimmedResult = finalRecipeJsonString?.trim() ?? "";
+      if (
+        !(trimmedResult.startsWith("[") && trimmedResult.endsWith("]")) &&
+        !(trimmedResult.startsWith("{") && trimmedResult.endsWith("}"))
+      ) {
+        console.warn(
+          "[POST HANDLER] Final recipe output doesn't look like a JSON array/object:",
+          finalRecipeJsonString
+        );
+      }
+    } catch (error: any) {
+      console.error(
+        "[POST HANDLER] Error during recipe generation call:",
+        error
+      );
+      return NextResponse.json(
+        {
+          error: "Failed during recipe generation phase.",
+          details: error.message,
+        },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({ recipe: finalRecipeJsonString });
+  } catch (error: any) {
+    console.error("[POST HANDLER] Top-level error:", error);
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred.";
+    return NextResponse.json(
+      {
+        error: "An unexpected error occurred processing your request.",
+        details: errorMessage,
+      },
+      { status: 500 }
+    );
+  }
 }
