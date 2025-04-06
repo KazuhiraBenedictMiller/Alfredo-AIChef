@@ -1,13 +1,13 @@
 'use client';
 
-import { createContext, useState, useContext, useMemo } from 'react';
+import { createContext, useState, useContext, useMemo, useEffect } from 'react';
 
 const ThemeContext = createContext<{
   mode: string;
   set: React.Dispatch<React.SetStateAction<string>>;
 }>({
   mode: 'dark',
-  set: () => {},
+  set: () => { },
 });
 
 type Props = {
@@ -15,9 +15,19 @@ type Props = {
 };
 
 export const ThemeProvider = ({ children }: Props) => {
-  const [themeMode, setThemeMode] = useState(
-    localStorage.getItem('theme') || 'light'
-  );
+  // Start with a default theme
+  const [themeMode, setThemeMode] = useState('light');
+
+  // Use useEffect to safely access localStorage after component mount
+  useEffect(() => {
+    // Check if window is defined (client-side)
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        setThemeMode(savedTheme);
+      }
+    }
+  }, []);
 
   const contextValue = useMemo(
     () => ({ mode: themeMode, set: setThemeMode }),

@@ -11,8 +11,13 @@ export const ThemeButton = () => {
     _: React.ChangeEvent<HTMLInputElement>,
     checked: boolean
   ) => {
-    theme.set(checked ? 'dark' : 'light');
-    localStorage.setItem('theme', checked ? 'dark' : 'light');
+    const newTheme = checked ? 'dark' : 'light';
+    theme.set(newTheme);
+
+    // Safe localStorage access
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', newTheme);
+    }
   };
 
   return (
