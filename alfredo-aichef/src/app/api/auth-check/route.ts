@@ -7,14 +7,14 @@ export async function GET() {
 
     if (!user) {
       console.error("Auth Error: No user found.");
-      return new NextResponse("Ain't nobody got time fo dat'", { status: 401 });
+      return new NextResponse("No user is logged in'", { status: 401 });
     }
 
     const email = user.emailAddresses[0]?.emailAddress;
     if (!email) {
       console.error("Auth Error: User has no email.");
       return NextResponse.json(
-        { error: "Ain't nobody got time fo dat'" },
+        { error: "user email is not verified in the system.'" },
         { status: 401 }
       );
     }
