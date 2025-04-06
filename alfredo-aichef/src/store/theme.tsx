@@ -7,7 +7,7 @@ const ThemeContext = createContext<{
   set: React.Dispatch<React.SetStateAction<string>>;
 }>({
   mode: 'dark',
-  set: () => { },
+  set: () => {},
 });
 
 type Props = {
@@ -21,7 +21,7 @@ export const ThemeProvider = ({ children }: Props) => {
     if (typeof window !== 'undefined') {
       setThemeMode(localStorage.getItem('theme') || 'dark');
     }
-  }, [localStorage]);
+  }, []);
 
   const contextValue = useMemo(
     () => ({ mode: themeMode, set: setThemeMode }),
