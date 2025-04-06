@@ -100,7 +100,10 @@ export const RecipeBuilderV2 = () => {
           <Stack gap={2} mt={3}>
             <Stack flexDirection={'row'} justifyContent={'space-between'}>
               <Typography variant="h5">Recipes</Typography>
-              <Stack flexDirection={'row'}>
+              <Stack flexDirection={'row'} alignItems={'center'} gap={1}>
+                <Typography variant="h6">
+                  {`${get.selectedRecipe + 1}/${get?.data?.length}`}
+                </Typography>
                 <IconButton onClick={handle.prev} disabled={is.prevDisabled}>
                   <ArrowBackIosNewIcon></ArrowBackIosNewIcon>
                 </IconButton>

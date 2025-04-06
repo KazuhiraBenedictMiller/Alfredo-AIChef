@@ -15,6 +15,7 @@ export interface IngredientRow {
 
 export interface GetRecipePayload {
   ingredients: string;
+  meal: string;
 }
 
 export interface GetRecipeResponse {

@@ -7,10 +7,12 @@ import {
 
 export const getRecipes = async ({
   ingredients,
+  meal,
 }: GetRecipePayload): Promise<RecipeIngredient[]> => {
   try {
     const { data } = await axios.post<GetRecipeResponse>('/api/recipe', {
       ingredients,
+      meal: meal || 'lunch',
     });
     if (data?.recipe) {
       return JSON.parse(data.recipe);

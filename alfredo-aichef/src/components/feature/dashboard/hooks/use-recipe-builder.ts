@@ -19,7 +19,7 @@ export const useRecipeBuilder = () => {
   const { data, isPending, mutateAsync } = useMutation<
     RecipeIngredient[],
     Error,
-    { ingredients: string }
+    { ingredients: string; meal: string }
   >({
     mutationFn: getRecipes,
   });
@@ -32,7 +32,10 @@ export const useRecipeBuilder = () => {
         unit: row.unit,
       })
     );
-    await mutateAsync({ ingredients: JSON.stringify(ingredientsPayload) });
+    await mutateAsync({
+      ingredients: JSON.stringify(ingredientsPayload),
+      meal: selectedMeal,
+    });
   };
 
   const handlePrev = () => {
