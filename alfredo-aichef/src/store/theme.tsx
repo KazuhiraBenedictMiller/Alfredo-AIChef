@@ -15,19 +15,13 @@ type Props = {
 };
 
 export const ThemeProvider = ({ children }: Props) => {
-  // Start with a default theme
-  const [themeMode, setThemeMode] = useState('light');
+  const [themeMode, setThemeMode] = useState<string>('dark');
 
-  // Use useEffect to safely access localStorage after component mount
   useEffect(() => {
-    // Check if window is defined (client-side)
     if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        setThemeMode(savedTheme);
-      }
+      setThemeMode(localStorage.getItem('theme') || 'dark');
     }
-  }, []);
+  }, [localStorage]);
 
   const contextValue = useMemo(
     () => ({ mode: themeMode, set: setThemeMode }),
