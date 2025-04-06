@@ -21,6 +21,7 @@ import { RecipeLoader } from './recipe-loader';
 import { ingredients } from '@/constants/ingredients';
 import { useUser } from '@clerk/nextjs';
 import { useRecipeBuilder } from './hooks/use-recipe-builder';
+import { PrintRecipe } from './print-recipe';
 
 export const RecipeBuilderV2 = () => {
   const { user } = useUser();
@@ -97,9 +98,12 @@ export const RecipeBuilderV2 = () => {
             </Stack>
             <Card sx={{ border: '1px solid #ccc', borderRadius: '8px' }}>
               <CardContent>
-                <Typography variant="h6">
-                  {get.data[get.selectedRecipe].dish_name}
-                </Typography>
+                <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+                  <Typography variant="h6">
+                    {get.data[get.selectedRecipe].dish_name}
+                  </Typography>
+                  <PrintRecipe recipe={get.data[get.selectedRecipe]} buttonVariant="outlined" />
+                </Stack>
                 <Typography variant="subtitle1">Ingredients:</Typography>
                 <ul>
                   {get.data[get.selectedRecipe].ingredients &&
