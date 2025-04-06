@@ -58,7 +58,7 @@ export const Landing = () => {
           >
             <ArrowDownwardIcon
               sx={{
-                fontSize: '2rem',
+                fontSize: '4rem',
                 mb: 4,
                 animation: 'pulse 2s infinite ease-in-out',
                 '@keyframes pulse': {
