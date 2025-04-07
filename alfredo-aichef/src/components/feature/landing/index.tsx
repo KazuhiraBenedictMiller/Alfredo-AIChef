@@ -113,13 +113,14 @@ export const Landing = () => {
           <Stack
             flexDirection={'row'}
             justifyContent={'space-between'}
+            alignItems={'center'}
             gap={2}
             flexWrap={'wrap'}
             textAlign={md ? 'center' : 'start'}
           >
             <FaqSection></FaqSection>
             {md ? null : (
-              <img src="/faq.webp" alt="robot" style={{ flex: 1 }} />
+              <Image width={320} height={320} src="/faq.webp" alt="robot" style={{ flex: 1 }} />
             )}
           </Stack>
         </Stack>
