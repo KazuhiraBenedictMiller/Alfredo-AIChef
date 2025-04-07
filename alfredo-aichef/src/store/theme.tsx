@@ -21,7 +21,7 @@ export const ThemeProvider = ({ children }: Props) => {
     if (typeof window !== 'undefined') {
       setThemeMode(localStorage.getItem('theme') || 'dark');
     }
-  }, []); // Empty dependency array as we only want this to run once on mount
+  }, []);
 
   const contextValue = useMemo(
     () => ({ mode: themeMode, set: setThemeMode }),
