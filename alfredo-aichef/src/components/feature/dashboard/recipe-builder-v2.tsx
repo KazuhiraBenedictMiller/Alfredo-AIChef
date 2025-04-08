@@ -8,6 +8,8 @@ import {
   CardContent,
   Grid2,
   IconButton,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { IngredientSelect } from './ingredient-select';
 import { QuantityTextField } from './quantity-textfield';
@@ -25,48 +27,60 @@ import { PrintRecipe } from './print-recipe';
 import { MealSelect } from './meal-select';
 
 export const RecipeBuilderV2 = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+  
   const { user } = useUser();
   const { get, set, handle, is, reset } = useRecipeBuilder();
 
   return (
     <>
-      <Grid2 size={{ md: 12, lg: 6 }}>
+      <Grid2 size={{ xs: 12, md: 12, lg: 6 }}>
         <GradientTitle
-          variant="h4"
-          title={`Hi there, ${user?.fullName}! What are you going to cook today?`}
+          variant={isMobile ? "h5" : "h4"}
+          title={`Hi there, ${user?.fullName || 'Chef'}! What are you going to cook today?`}
         />
         <Stack
-          flexDirection={'row'}
-          justifyContent={'space-between'}
-          // alignItems={'center'}
+          flexDirection={'column'}
           mt={2}
           gap={1}
         >
           <Stack
-            flexDirection={'row'}
+            flexDirection={isMobile ? 'column' : 'row'}
             gap={1}
             justifyContent={'flex-start'}
-            flexWrap={'wrap'}
+            alignItems={isMobile ? 'stretch' : 'center'}
+            flexWrap={isMobile ? 'nowrap' : 'wrap'}
+            width="100%"
           >
             <IngredientSelect
               options={ingredients}
               selected={get.selectedIngredient}
               setSelected={set.selectedIngredient}
             />
-            <QuantityTextField
-              amount={get.amount}
-              setAmount={set.amount}
-              unit={get.unit}
-              setUnit={set.unit}
-            />
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={handle.addRow}
-              disabled={is.addDisabled}
+            
+            <Stack 
+              flexDirection={isMobile ? 'column' : 'row'} 
+              width={isMobile ? '100%' : 'auto'}
+              gap={1}
             >
-              Add
-            </Button>
+              <QuantityTextField
+                amount={get.amount}
+                setAmount={set.amount}
+                unit={get.unit}
+                setUnit={set.unit}
+              />
+              <Button
+                fullWidth={isMobile}
+                variant="contained"
+                startIcon={<AddIcon />}
+                onClick={handle.addRow}
+                disabled={is.addDisabled}
+              >
+                Add
+              </Button>
+            </Stack>
           </Stack>
         </Stack>
 
@@ -106,7 +120,8 @@ export const RecipeBuilderV2 = () => {
           </Stack>
         </Stack>
       </Grid2>
-      <Grid2 size={{ md: 12, lg: 6 }}>
+      
+      <Grid2 size={{ xs: 12, md: 12, lg: 6 }}>
         {is.dataPending ? (
           <RecipeLoader />
         ) : get.data ? (
